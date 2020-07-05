@@ -1,7 +1,7 @@
 //Parei em 01:00:00
 
 import React from 'react';
-import { FiLogIn } from 'react-icons/fi';
+import { FiLogIn,FiPlusSquare } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 import './styles.css';
@@ -27,7 +27,7 @@ const Home = () => {
                         
                         <Link to="/create-point">
                             <span>
-                                <FiLogIn />
+                                <FiPlusSquare />
                             </span>
                             <strong>Criar conta</strong>
                         </Link>
