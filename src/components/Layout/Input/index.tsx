@@ -5,8 +5,8 @@ interface InputProps {
     id: string,
     name: string,
     type: string,
-    placeholder: string,
-    required: boolean
+    placeholder?: string,
+    required?: boolean
 }
 const Input: React.FC<InputProps>   = (props) =>{
     return(
