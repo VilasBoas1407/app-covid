@@ -18,7 +18,7 @@ const Home = () => {
                     <p>Responda o questiónario diaremente sobre como está se sentindo.</p>
 
                     <div className="row">
-                        <Link to="/create-point">
+                        <Link to="/login">
                             <span>
                                 <FiLogIn />
                             </span>
