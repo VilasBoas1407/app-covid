@@ -1,6 +1,8 @@
 #page-login {
-    height: 100vh;
+    width: 100%;
+    max-width: 1100px;
   
+    margin: 0 auto;
   }
   
   #page-login .content {
@@ -14,11 +16,6 @@
     flex-direction: column;
     align-items: flex-start;
   }
-  
-  #page-login .content header {
-    margin: 32px 0 0;
-  }
-  
   #page-login .content main {
     flex: 1;
     max-width: 560px;
@@ -58,10 +55,6 @@
     #page-login .content {
       align-items: center;
       text-align: center;
-    }
-  
-    #page-login .content header {
-      margin: 48px auto 0;
     }
   
     #page-login .content main {
@@ -258,3 +251,7 @@
     align-items: center;
   }
   
+  #page-login header a svg {
+    margin-right: 16px;
+    color: var(--primary-color);
+  }

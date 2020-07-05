@@ -16,14 +16,16 @@ const Login = () => {
     }
     return(
         <div id="page-login">
+                            
+            <header>
+                <Header /> 
+                <Link to="/">
+                    <FiArrowLeft />
+                    Voltar para home
+                </Link>
+            </header>
             <div className="content">
-                <Header />  
-                <header>
-                    <Link to="/">
-                        <FiArrowLeft />
-                        Voltar para home
-                    </Link>
-                </header>
+
                 <form onSubmit={SubmitToLogin} className="form">
                     <img src={user} alt="people"  width="300px" height="300px"/>
                     <br/>

@@ -1,122 +1,33 @@
-#page-login {
-    height: 100vh;
-  
-  }
-  
-  #page-login .content {
+#page-create-point {
     width: 100%;
-    height: 100%;
     max-width: 1100px;
+  
     margin: 0 auto;
-    padding: 0 30px;
-  
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
   }
   
-  #page-login .content header {
-    margin: 32px 0 0;
-  }
+  #page-create-point header {
+    margin-top: 48px;
   
-  #page-login .content main {
-    flex: 1;
-    max-width: 560px;
-  
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  #page-login .content main h1 {
-    font-size: 54px;
-    color: var(--title-color);
-  }
-  
-  #page-login .content main p {
-    font-size: 24px;
-    margin-top: 8px;
-    line-height: 38px;
-  }
-  
-  #page-login .content main a span {
-    display: block;
-    background: rgba(0, 0, 0, 0.08);
-    width: 56px;
-    height: 56px;
-  
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s;
-
-    margin-right: 5px;
-    margin-left: 5px;
-  }
-
-  @media(max-width: 900px) {
-    #page-login .content {
-      align-items: center;
-      text-align: center;
-    }
-  
-    #page-login .content header {
-      margin: 48px auto 0;
-    }
-  
-    #page-login .content main {
-      align-items: center;
-    }
-  
-    #page-login .content main h1 {
-      font-size: 42px;
-    }
-  
-    #page-login .content main p {
-      font-size: 24px;
-    }
-  }
-  
-  #page-login form {
-    margin: 80px auto;
-    padding: 24px;
-    max-width: 730px;
-    background: #FFF;
-    border-radius: 8px;
-  
-    display: flex;
-    flex-direction: column;
-  }
-  
-  #page-login form h1 {
-    font-size: 36px;
-  }
-  
-  #page-login form fieldset {
-    margin-top: 56px;
-    min-inline-size: auto;
-    border: 0;
-  }
-  
-  #page-login form legend {
-    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
   }
   
-  #page-login form legend h2 {
-    font-size: 24px;
+  #page-create-point header a {
+    color: var(--title-color);
+    font-weight: bold;
+    text-decoration: none;
+  
+    display: flex;
+    align-items: center;
   }
   
-  #page-login form legend span {
-    font-size: 14px;
-    font-weight: normal;
-    color: var(--text-color);
+  #page-create-point header a svg {
+    margin-right: 16px;
+    color: var(--primary-color);
   }
   
-  #page-login form {
+  #page-create-point form {
     margin: 80px auto;
     padding: 64px;
     max-width: 730px;
@@ -126,17 +37,18 @@
     display: flex;
     flex-direction: column;
   }
-  #page-login form h1 {
+  
+  #page-create-point form h1 {
     font-size: 36px;
   }
   
-  #page-login form fieldset {
+  #page-create-point form fieldset {
     margin-top: 64px;
     min-inline-size: auto;
     border: 0;
   }
   
-  #page-login form legend {
+  #page-create-point form legend {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -144,22 +56,22 @@
     margin-bottom: 40px;
   }
   
-  #page-login form legend h2 {
+  #page-create-point form legend h2 {
     font-size: 24px;
   }
   
-  #page-login form legend span {
+  #page-create-point form legend span {
     font-size: 14px;
     font-weight: normal;
     color: var(--text-color);
   }
   
-  #page-login form .field-group {
+  #page-create-point form .field-group {
     flex: 1;
     display: flex;
   }
   
-  #page-login form .field {
+  #page-create-point form .field {
     flex: 1;
   
     display: flex;
@@ -167,10 +79,9 @@
     margin-bottom: 24px;
   }
   
-  #page-login form .field input[type=text],
-  #page-login form .field input[type=email],
-  #page-login form .field input[type=number],
-  #page-login form .field input[type=password]{
+  #page-create-point form .field input[type=text],
+  #page-create-point form .field input[type=email],
+  #page-create-point form .field input[type=number] {
     flex: 1;
     background: #F0F0F5;
     border-radius: 8px;
@@ -180,7 +91,7 @@
     color: #6C6C80;
   }
   
-  #page-login form .field select {
+  #page-create-point form .field select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -193,36 +104,48 @@
     color: #6C6C80;
   }
   
-  #page-login form .field input::placeholder {
+  #page-create-point form .field input::placeholder {
     color: #A0A0B2;
   }
   
-  #page-login form .field label {
-    padding: 5px;
-    font-size: 20px;
+  #page-create-point form .field label {
+    font-size: 14px;
     margin-bottom: 8px;
   }
   
-  #page-login form .field :disabled {
+  #page-create-point form .field :disabled {
     cursor: not-allowed;
   }
   
-  #page-login form .field-group .field + .field {
+  #page-create-point form .field-group .field + .field {
     margin-left: 24px;
   }
   
-  #page-login form .field-group input + input {
+  #page-create-point form .field-group input + input {
     margin-left: 24px;
   }
-
-  #page-login form .leaflet-container {
+  
+  #page-create-point form .field-check {
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  #page-create-point form .field-check input[type=checkbox] {
+    background: #F0F0F5;
+  }
+  
+  #page-create-point form .field-check label {
+    margin: 0 0 0 8px;
+  }
+  
+  #page-create-point form .leaflet-container {
     width: 100%;
     height: 350px;
     border-radius: 8px;
     margin-bottom: 24px;
   }
   
-  #page-login form button {
+  #page-create-point form button {
     width: 260px;
     height: 56px;
     background: var(--primary-color);
@@ -231,30 +154,13 @@
     font-weight: bold;
     font-size: 16px;
     border: 0;
-    align-self: center;
+    align-self: flex-end;
     margin-top: 40px;
     transition: background-color 0.2s;
     cursor: pointer;
   }
   
-  #page-login form button:hover {
+  #page-create-point form button:hover {
     background: #2FB86E;
-  }
-  
-  #page-login header {
-    margin-top: 48px;
-  
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  #page-login header a {
-    color: var(--title-color);
-    font-weight: bold;
-    text-decoration: none;
-  
-    display: flex;
-    align-items: center;
   }
   

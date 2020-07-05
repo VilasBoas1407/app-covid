@@ -9,7 +9,7 @@ const Header = () => {
         <header>
         <div className="row">
             <h1 className="title">Stop Covid-19</h1>
-            <img src={logo} alt="covid-icon" height="72px" width="72px"/>
+            <img src={logo} alt="covid-icon" height="64px" width="64px"/>
         </div>
         
     </header>   

@@ -25,7 +25,7 @@ const Home = () => {
                             <strong>Login</strong>
                         </Link>
                         
-                        <Link to="/create-point">
+                        <Link to="/create-account">
                             <span>
                                 <FiPlusSquare />
                             </span>
