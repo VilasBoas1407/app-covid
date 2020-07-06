@@ -1,5 +1,5 @@
 import React, {FormEvent} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 
 import './styles.css';
@@ -9,10 +9,11 @@ import Input from '../../components/Layout/Input';
 
 import user from '../../assets/people/login.png';
 const Login = () => {
+    const history = useHistory();
 
     function SubmitToLogin( event : FormEvent ){
-        console.log("KKK EAE MEN");
         event.preventDefault();
+        history.push('/user/Details');
     }
     return(
         <div id="page-login">
