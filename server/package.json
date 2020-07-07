@@ -4,7 +4,8 @@
   "description": "Stop covid abrasel",
   "main": "index.js",
   "scripts": {
-    "test": "'echo\\'error:\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[C\u001b[E\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C no test specified\\' && exit 1'"
+    "test": "'echo\\'error:\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[C\u001b[E\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C no test specified\\' && exit 1'",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
