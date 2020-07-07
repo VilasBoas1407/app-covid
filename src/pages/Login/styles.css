@@ -218,7 +218,7 @@
   #page-login form button {
     width: 260px;
     height: 56px;
-    background: var(--primary-color);
+    background: #00703a;
     border-radius: 8px;
     color: #FFF;
     font-weight: bold;
@@ -231,7 +231,7 @@
   }
   
   #page-login form button:hover {
-    background: #2FB86E;
+    background: #00703a;
   }
   
   #page-login header {

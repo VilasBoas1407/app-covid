@@ -31,16 +31,27 @@ const Details = () => {
             <form>
                 <label>Preencha o formulário de acordo com o que está sentido hoje :</label>
                 <br/>
-
-                <InputFeel label={"Febre"} name={"Febre"}/>
-                <InputFeel label={"Tosse seca"}  name={"TosseSeca"}/>
-                <InputFeel label={"Cansaço"}  name={"Cansaco"}/>
-                <InputFeel label={"Dificuldade de respirar ou falta de ar"}  name={"FaltaDeAr"}/>
-
+                <div className="field-group"> 
+                    <div className="check-box row">
+                        <InputFeel label={"Febre"} name={"Febre"}/>
+                        <label>Febre</label>
+                    </div>
+                    <div className="check-box row">
+                        <InputFeel label={"Tosse seca"}  name={"TosseSeca"}/>
+                        <label>Tosse seca</label>
+                    </div>
+                    <div className="check-box row">
+                        <InputFeel label={"Cansaço"}  name={"Cansaco"}/>
+                        <label>Cansaço</label>
+                    </div>
+                    <div className="check-box row">
+                        <InputFeel label={"Febre"} name={"Febre"}/>
+                        <label>Febre</label>
+                    </div>
+                </div>
                 <button type="submit">
                         Salvar
                     </button>
-
             </form>
         </div>
     )

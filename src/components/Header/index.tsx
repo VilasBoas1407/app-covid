@@ -1,15 +1,14 @@
 import React from 'react';
 
 
-import logo from '../../assets/coronavirus.svg';
+import logo from '../../assets/abrasel/logo.png';
 import './styles.css';
 
 const Header = () => {
     return(
         <header>
         <div className="row">
-            <h1 className="title">Stop Covid-19</h1>
-            <img src={logo} alt="covid-icon" height="64px" width="64px"/>
+            <img src={logo} alt="covid-icon" height="88px" width="208px"/>
         </div>
         
     </header>   
