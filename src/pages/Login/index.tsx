@@ -8,12 +8,13 @@ import Header from '../../components/Header';
 import Input from '../../components/Layout/Input';
 
 import user from '../../assets/people/login.png';
+
 const Login = () => {
     const history = useHistory();
 
     function SubmitToLogin( event : FormEvent ){
         event.preventDefault();
-        history.push('/user/Details');
+        history.push('/comp/Dashboard');
     }
     return(
         <div id="page-login">

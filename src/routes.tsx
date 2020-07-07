@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Details from './pages/User/Details';
-
+import Dashboard from './pages/Dashboard/Dashboard';
 const Routes = () => {
     return (
         <BrowserRouter>
@@ -13,6 +13,7 @@ const Routes = () => {
             <Route component={Login} path="/login"/>
             <Route component={Register} path="/create-account" />
             <Route component={Details} path="/user/Details"/>
+            <Route component={Dashboard} path="/comp/Dashboard"/>
         </BrowserRouter>
     );
 }
