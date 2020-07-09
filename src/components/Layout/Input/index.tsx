@@ -6,7 +6,8 @@ interface InputProps {
     name: string,
     type: string,
     placeholder?: string,
-    required?: boolean
+    required?: boolean,
+    onChange?: any,
 }
 const Input: React.FC<InputProps>   = (props) =>{
     return(
@@ -16,6 +17,7 @@ const Input: React.FC<InputProps>   = (props) =>{
             id={props.id}
             placeholder={props.placeholder}
             required={props.required}
+            onChange={props.onChange}
         />
     )
 };
