@@ -37,7 +37,6 @@ const Login = () => {
             },
           
           }).then(function(response){
-              console.log(response);
 
               if(response.data.userData){
 
@@ -45,7 +44,7 @@ const Login = () => {
 
                 localStorage.setItem("userData", JSON.stringify(userData));
                 localStorage.setItem("token",response.data.token);
-                
+
                 history.push('/comp/Dashboard');
               }
               else{
@@ -63,10 +62,12 @@ const Login = () => {
                   });
           });
     }
+
     function handleInputChange(event: ChangeEvent<HTMLInputElement>){
         const { name, value } = event.target;
         setFormData({...formData, [name]: value});
     }
+    
     return(
         <div id="page-login">
                             
