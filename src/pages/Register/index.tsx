@@ -3,13 +3,11 @@ import { Link } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 
 import './styles.css';
 
 import Header from '../../components/Header';
-import Input from '../../components/Layout/Input';
 
 import api from '../../services/api';  
 
