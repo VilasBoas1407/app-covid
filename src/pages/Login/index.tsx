@@ -2,6 +2,7 @@ import React, {useState, ChangeEvent, FormEvent } from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 
+import swal from 'sweetalert';
 import './styles.css';
 
 import Header from '../../components/Header';
@@ -9,11 +10,9 @@ import Input from '../../components/Layout/Input';
 
 import user from '../../assets/people/login.png';
 
-
+import api from '../../services/api'
 
 const Login = () => {
-
-
 
     const[formData,setFormData] = useState({
         ds_email : '',
@@ -22,12 +21,47 @@ const Login = () => {
 
     const history = useHistory();
 
-    function SubmitToLogin( event : FormEvent ){
+    async function SubmitToLogin( event : FormEvent ){
         event.preventDefault();
 
         console.log(formData);
 
-        history.push('/comp/Dashboard');
+        const { ds_email, ds_senha} = formData;
+
+        api.request({
+            method: 'POST',
+            url: `/user`,
+            data: {
+              ds_email: ds_email,
+              ds_senha : ds_senha
+            },
+          
+          }).then(function(response){
+              console.log(response);
+
+              if(response.data.userData){
+
+                const userData = response.data.userData[0];
+
+                localStorage.setItem("userData", JSON.stringify(userData));
+                localStorage.setItem("token",response.data.token);
+                
+                history.push('/comp/Dashboard');
+              }
+              else{
+                swal({
+                    title: "Erro!",
+                    text: "Usuário ou senha inválidos!",
+                    icon: "error"
+                  });
+              }
+          }).catch(function(err){
+                swal({
+                    title: "Erro!",
+                    text: "Ocorreu um erro interno, favor contatar a administração : " + err,
+                    icon: "error"
+                  });
+          });
     }
     function handleInputChange(event: ChangeEvent<HTMLInputElement>){
         const { name, value } = event.target;
