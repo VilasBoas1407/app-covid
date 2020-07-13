@@ -91,182 +91,7 @@ const Register = () => {
         id_emp : ''
     });
 
-    const UserForm = () => (
-            <form onSubmit={registerUser}>
-                    <RadioGroup aria-label="quiz" name="type" onChange={handleRadioChange}>
-                        <Grid container spacing={3}>
-                            <Grid item>
-                                <FormControlLabel 
-                                    value="worker" 
-                                    control={<Radio />} 
-                                    label="Cadastro Funcionário"
-                                    checked={formValue.type === 'worker'} 
-                                />
-                            </Grid>
-                            <Grid item>
-                                <FormControlLabel 
-                                    value="company" 
-                                    control={<Radio />} 
-                                    label="Cadastro Empresa"
-                                    checked={formValue.type === 'company'} 
-                                />
-                            </Grid>  
-                        </Grid>
-                    </RadioGroup>
-                 <h1> Cadastro de {formValue.formName}</h1>    
-                <legend>                  
-                    <h2>
-                        Dados
-                    </h2>
-                    {
-                        formValue.formValidate.all_ok !== true ?<span className={classes.spanError}>Por favor, preencha todos os campos</span>: null
-                    }
-                </legend>
-                    <div>
-                        <Grid container spacing={3}>
-                                <TextField
-                                    label="Nome Completo"
-                                    id="ds_nome"
-                                    name="ds_nome"
-                                    variant="outlined"
-                                    className={
-                                        formValue.formValidate.ds_cpf === true ?  classes.formControl : classes.formControl_hasError
-                                    }
-                                    onChange={handleInputChange}
-                                />
-                        </Grid>
-                        <br/>
-                    </div>
-                    <br/>
-                    <div>
-                        <Grid container spacing={3}>
-                                <TextField
-                                    label="Telefone"
-                                    id="ds_telefone"
-                                    name="ds_telefone"
-                                    variant="outlined"
-                                    className="input-form"
-                                    onChange={handleInputChange}
-                                />
-                        </Grid>
-                        <br/>
-                    </div>
-                    <br/>
-                    <div>
-                        <Grid container spacing={3}>
-                                <TextField
-                                    label="CPF"
-                                    id="ds_cpf"
-                                    name="ds_cpf"
-                                    variant="outlined"
-                                    className="input-form"
-                                    onChange={handleInputChange}
-                                />
-                        </Grid>
-                        <br/>
-                    </div>
-                    <div>
-                        <br/>
-                        <Grid container spacing={3}>
-                                <TextField
-                                        label="Email"
-                                        id="ds_email"
-                                        name="ds_email"
-                                        variant="outlined"
-                                        className="input-form"
-                                        onChange={handleInputChange}
-                                />
-                        </Grid>
-                        <br/>
-                        <br/>
-                        <Grid container spacing={3}>
-                            <Grid  xs={12} sm={6} item>
-                                    <TextField
-                                        label="Senha"
-                                        id="ds_senha"
-                                        name="ds_senha"
-                                        type="password"
-                                        variant="outlined"
-                                        className="input-form"
-                                        onChange={handleInputChange}
-                                    />
-                            </Grid>
-                            <br/>
-                            <br/>
-                            <Grid  xs={12} sm={6} item>
-                                    <TextField
-                                        label="Confirme sua Senha"
-                                        id="ds_senha_confirm"
-                                        name="ds_senha_confirm"
-                                        type="password"
-                                        variant="outlined"
-                                        className="input-form"
-                                        onChange={handleInputChange}
-                                    />
-                            </Grid>
-                        </Grid>
-                        <br/>
-                        <br/>
-                        <Grid  container spacing={3}>
-                             <FormControl variant="outlined" className={classes.formControl}>
-                                <InputLabel htmlFor="outlined-age-native-simple">Selecione sua empresa:</InputLabel>
-                                    <Select
-                                        native={false}
-                                        label="Selecione sua empresa:"
-                                        name="company"
-                                        onChange={handleSelect}
-                                        value={selectedCompany}
-                                    >
-                                        <option aria-label="None" value="" />
-                                        {companies.map(function(company : Company,key){
-                                            return <option value={company.id_emp} > {company.ds_nome}</option>
-                                        })}
-                                    </Select>
-                              </FormControl>
-                        </Grid>
-                    </div>
-                <div>
-                    <button type="submit" className="button-confirm">
-                        Criar Conta
-                    </button>
-                </div>
 
-            </form>
-    );
-
-    const CompanyForm = () =>(
-        <form onSubmit={registerCompany}>
-            <RadioGroup aria-label="quiz" name="type" onChange={handleRadioChange}>
-                <Grid container spacing={3}>
-                    <Grid item>
-                        <FormControlLabel 
-                                value="worker" 
-                                control={<Radio />} 
-                                label="Cadastro Funcionário"
-                                checked={formValue.type === 'worker'} 
-                            />
-                    </Grid>
-                    <Grid item>
-                        <FormControlLabel 
-                            value="company" 
-                            control={<Radio />} 
-                            label="Cadastro Empresa"
-                            checked={formValue.type === 'company'} 
-                        />
-                    </Grid>  
-                </Grid>
-            </RadioGroup>
-             <h1> Cadastro de {formValue.formName}</h1>    
-                <legend>
-                    <h2>
-                        Dados
-                    </h2>
-                    {
-                        formValue.formValidate.all_ok !== true ?<span className={classes.spanError}>Por favor, preencha todos os campos</span>: null
-                    }
-                </legend>
-        </form>
-    )
     //#region Function Inputs
 
     function handleInputChange(event : ChangeEvent<HTMLInputElement>){
@@ -388,7 +213,187 @@ const Register = () => {
                 </Link>
             </header>
                 {
-                    formValue.type === 'worker' ? <UserForm /> : <CompanyForm />
+                    formValue.type === 'worker' ? (
+                        <form onSubmit={registerUser} key="user">
+                    <RadioGroup aria-label="quiz" name="type" onChange={handleRadioChange}>
+                        <Grid container spacing={3}>
+                            <Grid item>
+                                <FormControlLabel 
+                                    value="worker" 
+                                    control={<Radio />} 
+                                    label="Cadastro Funcionário"
+                                    checked={formValue.type === 'worker'} 
+                                />
+                            </Grid>
+                            <Grid item>
+                                <FormControlLabel 
+                                    value="company" 
+                                    control={<Radio />} 
+                                    label="Cadastro Empresa"
+                                />
+                            </Grid>  
+                        </Grid>
+                    </RadioGroup>
+                 <h1> Cadastro de {formValue.formName}</h1>    
+                 <br/>
+                <legend>                  
+                    <h2>
+                        Dados
+                    </h2>
+                    {
+                        formValue.formValidate.all_ok !== true ?<span className={classes.spanError}>Por favor, preencha todos os campos</span>: null
+                    }
+                </legend>
+                    <div>
+                        <Grid container spacing={3}>
+                                <TextField
+                                    label="Nome Completo"
+                                    id="ds_nome"
+                                    name="ds_nome"
+                                    variant="outlined"
+                                    className={
+                                        formValue.formValidate.ds_cpf === true ?  classes.formControl : classes.formControl_hasError
+                                    }
+                                    onChange={handleInputChange}
+                                    value={formData.ds_nome}
+                                />
+                        </Grid>
+                        <br/>
+                    </div>
+                    <br/>
+                    <div>
+                        <Grid container spacing={3}>
+                                <TextField
+                                    label="Telefone"
+                                    id="ds_telefone"
+                                    name="ds_telefone"
+                                    variant="outlined"
+                                    className="input-form"
+                                    onChange={handleInputChange}
+                                    value={formData.ds_telefone}
+                                />
+                        </Grid>
+                        <br/>
+                    </div>
+                    <br/>
+                    <div>
+                        <Grid container spacing={3}>
+                                <TextField
+                                    label="CPF"
+                                    id="ds_cpf"
+                                    name="ds_cpf"
+                                    variant="outlined"
+                                    className="input-form"
+                                    onChange={handleInputChange}
+                                    value={formData.ds_cpf}
+                                />
+                        </Grid>
+                        <br/>
+                    </div>
+                    <div>
+                        <br/>
+                        <Grid container spacing={3}>
+                                <TextField
+                                        label="Email"
+                                        id="ds_email"
+                                        name="ds_email"
+                                        variant="outlined"
+                                        className="input-form"
+                                        onChange={handleInputChange}
+                                        value={formData.ds_email}
+                                />
+                        </Grid>
+                        <br/>
+                        <br/>
+                        <Grid container spacing={3}>
+                            <Grid  xs={12} sm={6} item>
+                                    <TextField
+                                        label="Senha"
+                                        id="ds_senha"
+                                        name="ds_senha"
+                                        type="password"
+                                        variant="outlined"
+                                        className="input-form"
+                                        onChange={handleInputChange}
+                                        value={formData.ds_senha}
+                                    />
+                            </Grid>
+                            <br/>
+                            <br/>
+                            <Grid  xs={12} sm={6} item>
+                                    <TextField
+                                        label="Confirme sua Senha"
+                                        id="ds_senha_confirm"
+                                        name="ds_senha_confirm"
+                                        type="password"
+                                        variant="outlined"
+                                        className="input-form"
+                                        onChange={handleInputChange}
+                                        value={formData.ds_senha_confirm}
+                                    />
+                            </Grid>
+                        </Grid>
+                        <br/>
+                        <br/>
+                        <Grid  container spacing={3}>
+                             <FormControl variant="outlined" className={classes.formControl}>
+                                <InputLabel htmlFor="outlined-age-native-simple">Selecione sua empresa:</InputLabel>
+                                    <Select
+                                        native={false}
+                                        label="Selecione sua empresa:"
+                                        name="company"
+                                        onChange={handleSelect}
+                                        value={selectedCompany}
+                                    >
+                                        <option aria-label="None" value="" />
+                                        {companies.map(function(company : Company,key){
+                                            return <option value={company.id_emp} > {company.ds_nome}</option>
+                                        })}
+                                    </Select>
+                              </FormControl>
+                        </Grid>
+                    </div>
+                <div>
+                    <button type="submit" className="button-confirm">
+                        Criar Conta
+                    </button>
+                </div>
+
+            </form>
+                    ): (
+            <form onSubmit={registerCompany} key="company">
+                <RadioGroup aria-label="quiz" name="type" onChange={handleRadioChange}>
+                    <Grid container spacing={3}>
+                        <Grid item>
+                            <FormControlLabel 
+                                value="worker" 
+                                control={<Radio />} 
+                                label="Cadastro Funcionário"
+                                checked={formValue.type === 'worker'} 
+                            />
+                        </Grid>
+                        <Grid item>
+                            <FormControlLabel 
+                                value="company" 
+                                control={<Radio />} 
+                                label="Cadastro Empresa"
+                                checked={formValue.type === 'company'} 
+                            />
+                        </Grid>  
+                    </Grid>
+                </RadioGroup>
+             <h1> Cadastro de {formValue.formName}</h1>    
+                <br/>
+                <legend>
+                    <h2>
+                        Dados
+                    </h2>
+                    {
+                        formValue.formValidate.all_ok !== true ?<span className={classes.spanError}>Por favor, preencha todos os campos</span>: null
+                    }
+                </legend>
+        </form>
+                    )
                 }
         </div> 
     );
