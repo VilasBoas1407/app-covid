@@ -21,15 +21,30 @@ import Header from '../../components/Header';
 import api from '../../services/api';
 
 
+
 const useStyles = makeStyles((theme) => ({
     formControl: {
       width : '100%',
       background : '#F0F0F5',
       borderRadius : '8px',
       border : 0,
-      padding : '16px 24px',
+      padding : ' ',
       fontSize : 16,
       color :  '#6C6C80'
+    },
+    formControl_hasError: {
+        border:1,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: '#FF0000',
+        width : '100%',
+        background : '#F0F0F5',
+        borderRadius : '8px',
+        fontSize : 16,
+    },
+    spanError :{
+        color: '#FF0000',
+        fontSize: 12,
     },
     selectEmpty: {
       marginTop: theme.spacing(2),
@@ -54,7 +69,15 @@ const CreatePoint = () => {
 
     const [formValue, setFormValue] = useState({
         type: 'worker',
-        formName : 'Funcionário'
+        formName : 'Funcionário',
+        formValidate : {
+            all_ok: true,
+            ds_cpf : true,
+            ds_email : true,
+            ds_senha : true,
+            ds_nome : true,
+            ds_cnpj : true
+        },
     });
 
 
@@ -88,8 +111,9 @@ const CreatePoint = () => {
         else
             formName = 'Empresa'
         setFormValue({
+            ...formValue,
             type : value,
-            formName: formName
+            formName: formName,
         });
     }
 
@@ -194,7 +218,7 @@ const CreatePoint = () => {
                                     control={<Radio />} 
                                     label="Cadastro Funcionário"
                                     checked={formValue.type === 'worker'} 
-                                    />
+                                />
                             </Grid>
                             <Grid item>
                                 <FormControlLabel value="company" control={<Radio />} label="Cadastro Empresa"/>
@@ -207,7 +231,11 @@ const CreatePoint = () => {
                         <h2>
                             Dados
                         </h2>
-                    </legend>
+                        {
+                            formValue.formValidate.all_ok !== true ?<span className={classes.spanError}>Por favor, preencha todos os campos</span>: null
+
+                        }
+                        </legend>
                     <div>
                         <Grid container spacing={3}>
                                 <TextField
@@ -215,7 +243,9 @@ const CreatePoint = () => {
                                     id="ds_nome"
                                     name="ds_nome"
                                     variant="outlined"
-                                    className="input-form"
+                                    className={
+                                        formValue.formValidate.ds_cpf === true ?  classes.formControl : classes.formControl_hasError
+                                    }
                                     onChange={handleInputChange}
                                 />
                         </Grid>
