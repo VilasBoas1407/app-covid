@@ -91,12 +91,28 @@ const Register = () => {
         id_emp : ''
     });
 
+    const [formCompany,setFormCompany] = useState({
+        ds_email : '',
+        ds_senha : '',
+        ds_senha_confirm: '',
+        ds_nome : '',
+        ds_cnpj : '',
+        ds_telefone :'',
+        id_emp : ''
+    });
+
 
     //#region Function Inputs
 
     function handleInputChange(event : ChangeEvent<HTMLInputElement>){
-        const { name, value } = event.target;
-        setFormData({...formData, [name]: value });
+        if(formValue.type === 'worker'){
+            const { name, value } = event.target;
+            setFormData({...formData, [name]: value });
+        }
+        else{
+            const { name, value } = event.target;
+            setFormCompany({...formCompany, [name]: value });
+        }
     }
 
     function handleSelect(event : any){
@@ -392,6 +408,93 @@ const Register = () => {
                         formValue.formValidate.all_ok !== true ?<span className={classes.spanError}>Por favor, preencha todos os campos</span>: null
                     }
                 </legend>
+                        <Grid container spacing={3}>
+                                        <TextField
+                                            label="Nome Empresa"
+                                            id="ds_nome "
+                                            name="ds_nome"
+                                            variant="outlined"
+                                            className={
+                                                formValue.formValidate.ds_cpf === true ?  classes.formControl : classes.formControl_hasError
+                                            }
+                                            onChange={handleInputChange}
+                                            value={formCompany.ds_nome}
+                                        />
+                        </Grid>
+                        <br/>
+                        <br/>
+                        <Grid container spacing={3}>
+                                <TextField
+                                    label="Telefone"
+                                    id="ds_telefone"
+                                    name="ds_telefone"
+                                    variant="outlined"
+                                    className="input-form"
+                                    onChange={handleInputChange}
+                                    value={formCompany.ds_telefone}
+                                />
+                        </Grid>
+                        <br/>
+                        <br/>
+                        <Grid container spacing={3}>
+                                <TextField
+                                    label="CNPJF"
+                                    id="ds_cnpj"
+                                    name="ds_cnpj"
+                                    variant="outlined"
+                                    className="input-form"
+                                    onChange={handleInputChange}
+                                    value={formCompany.ds_cnpj}
+                                />
+                        </Grid>
+                        <br/>
+                        <br/>
+                        <Grid container spacing={3}>
+                                <TextField
+                                        label="Email"
+                                        id="ds_email"
+                                        name="ds_email"
+                                        variant="outlined"
+                                        className="input-form"
+                                        onChange={handleInputChange}
+                                        value={formCompany.ds_email}
+                                />
+                        </Grid>
+                        <br/>
+                        <br/>
+                        <Grid container spacing={3}>
+                            <Grid  xs={12} sm={6} item>
+                                    <TextField
+                                        label="Senha"
+                                        id="ds_senha"
+                                        name="ds_senha"
+                                        type="password"
+                                        variant="outlined"
+                                        className="input-form"
+                                        onChange={handleInputChange}
+                                        value={formCompany.ds_senha}
+                                    />
+                            </Grid>
+                            <br/>
+                            <br/>
+                            <Grid  xs={12} sm={6} item>
+                                    <TextField
+                                        label="Confirme sua Senha"
+                                        id="ds_senha_confirm"
+                                        name="ds_senha_confirm"
+                                        type="password"
+                                        variant="outlined"
+                                        className="input-form"
+                                        onChange={handleInputChange}
+                                        value={formCompany.ds_senha_confirm}
+                                    />
+                            </Grid>
+                        </Grid>
+                        <div>
+                            <button type="submit" className="button-confirm">
+                                Criar Conta
+                            </button>
+                        </div>
         </form>
                     )
                 }
