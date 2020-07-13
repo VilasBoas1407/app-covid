@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
     spanError :{
         color: '#FF0000',
         fontSize: 12,
+        fontStyle: '#FF0000',
     },
     selectEmpty: {
       marginTop: theme.spacing(2),
@@ -59,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     ds_cnpj : string,
     dt_cadastro : Date
   }
-const CreatePoint = () => {
+const Register = () => {
 
     const history = useHistory();
     const classes = useStyles();
@@ -80,7 +81,6 @@ const CreatePoint = () => {
         },
     });
 
-
     const [formData,setFormData] = useState({
         ds_email : '',
         ds_senha : '',
@@ -91,127 +91,10 @@ const CreatePoint = () => {
         id_emp : ''
     });
 
-    //#region Function Inputs
-
-    function handleInputChange(event : ChangeEvent<HTMLInputElement>){
-        const { name, value } = event.target;
-        setFormData({...formData, [name]: value });
-    }
-
-    function handleSelect(event : any){
-        setSelectedCompany(event.target.value); 
-    }
-
-
-    function handleRadioChange(event : ChangeEvent<HTMLInputElement>){
-        const { value } = event.target;
-        let formName = '';
-        if(value === 'worker')
-            formName = 'Funcionário'
-        else
-            formName = 'Empresa'
-        setFormValue({
-            ...formValue,
-            type : value,
-            formName: formName,
-        });
-    }
-
-    //#endregion
-
-    async function registerUser( event : FormEvent ){
-        event.preventDefault();
-        let userData = {  
-            ds_email : '',
-            ds_senha : '',
-            ds_nome : '',
-            ds_cpf : '',
-            ds_telefone :'',
-            id_emp : ''
-        };
-
-        userData.ds_email = formData.ds_email;
-        userData.ds_senha = formData.ds_senha;
-        userData.ds_cpf = formData.ds_cpf;
-        userData.ds_nome = formData.ds_nome;
-        userData.ds_telefone = formData.ds_telefone;
-        userData.id_emp = selectedCompany;
-
-        //Separar em uma outra função, pois tenho que validar o CPF também, e o e-mail.
-        if(userData.ds_senha !== formData.ds_senha_confirm){
-            swal({
-                title: "Erro!",
-                text: "As senhas não batem!",
-                icon: "error"
-              });
-        }  
-        else{
-            api.request({
-                method: 'POST',
-                url: `users`,
-                data:{
-                    userData : userData
-                }
-            })
-            .then(function(response){
-                if(response.data.valid){
-                    swal({
-                        title: "Sucesso!",
-                        text: "Usuário Cadastrado com sucesso!",
-                        icon: "success"
-                      });
-                      history.push('/login');
-                }   
-                else{
-                    swal({
-                        title: "Erro!",
-                        text: response.data.message,
-                        icon: "error"
-                      });
-                }
-            }).catch(function(err){
-                swal({
-                    title: "Erro!",
-                    text: err,
-                    icon: "error"
-                  });
-            });
-        }    
-
-    }
-
-    useEffect(() => {
-        api.request({
-            method: 'GET',
-            url: `/companies`,
-        })
-        .then(function(response){
-            if(response.data.companyData){
-                setCompanies(response.data.companyData);
-            }   
-            else{
-                swal({
-                    title: "Erro!",
-                    text: response.data.message,
-                    icon: "error"
-                  });
-            }
-        }).catch(function(err){});
-    },[])
-
-    return (
-        <div id="page-create-point">
-            <header>
-                <Header />
-                <Link to="/">
-                    <FiArrowLeft />
-                    Voltar para home
-                </Link>
-            </header>
-          
+    const UserForm = () => (
             <form onSubmit={registerUser}>
-                <RadioGroup aria-label="quiz" name="type" onChange={handleRadioChange}>
-                    <Grid container spacing={3}>
+                    <RadioGroup aria-label="quiz" name="type" onChange={handleRadioChange}>
+                        <Grid container spacing={3}>
                             <Grid item>
                                 <FormControlLabel 
                                     value="worker" 
@@ -221,21 +104,24 @@ const CreatePoint = () => {
                                 />
                             </Grid>
                             <Grid item>
-                                <FormControlLabel value="company" control={<Radio />} label="Cadastro Empresa"/>
+                                <FormControlLabel 
+                                    value="company" 
+                                    control={<Radio />} 
+                                    label="Cadastro Empresa"
+                                    checked={formValue.type === 'company'} 
+                                />
                             </Grid>  
-                    </Grid>
-                </RadioGroup>
-                <h1> Cadastro de {formValue.formName}</h1>
-                <fieldset>
-                    <legend>
-                        <h2>
-                            Dados
-                        </h2>
-                        {
-                            formValue.formValidate.all_ok !== true ?<span className={classes.spanError}>Por favor, preencha todos os campos</span>: null
-
-                        }
-                        </legend>
+                        </Grid>
+                    </RadioGroup>
+                 <h1> Cadastro de {formValue.formName}</h1>    
+                <legend>                  
+                    <h2>
+                        Dados
+                    </h2>
+                    {
+                        formValue.formValidate.all_ok !== true ?<span className={classes.spanError}>Por favor, preencha todos os campos</span>: null
+                    }
+                </legend>
                     <div>
                         <Grid container spacing={3}>
                                 <TextField
@@ -329,6 +215,7 @@ const CreatePoint = () => {
                                         label="Selecione sua empresa:"
                                         name="company"
                                         onChange={handleSelect}
+                                        value={selectedCompany}
                                     >
                                         <option aria-label="None" value="" />
                                         {companies.map(function(company : Company,key){
@@ -338,7 +225,6 @@ const CreatePoint = () => {
                               </FormControl>
                         </Grid>
                     </div>
-                </fieldset>
                 <div>
                     <button type="submit" className="button-confirm">
                         Criar Conta
@@ -346,8 +232,166 @@ const CreatePoint = () => {
                 </div>
 
             </form>
+    );
+
+    const CompanyForm = () =>(
+        <form onSubmit={registerCompany}>
+            <RadioGroup aria-label="quiz" name="type" onChange={handleRadioChange}>
+                <Grid container spacing={3}>
+                    <Grid item>
+                        <FormControlLabel 
+                                value="worker" 
+                                control={<Radio />} 
+                                label="Cadastro Funcionário"
+                                checked={formValue.type === 'worker'} 
+                            />
+                    </Grid>
+                    <Grid item>
+                        <FormControlLabel 
+                            value="company" 
+                            control={<Radio />} 
+                            label="Cadastro Empresa"
+                            checked={formValue.type === 'company'} 
+                        />
+                    </Grid>  
+                </Grid>
+            </RadioGroup>
+             <h1> Cadastro de {formValue.formName}</h1>    
+                <legend>
+                    <h2>
+                        Dados
+                    </h2>
+                    {
+                        formValue.formValidate.all_ok !== true ?<span className={classes.spanError}>Por favor, preencha todos os campos</span>: null
+                    }
+                </legend>
+        </form>
+    )
+    //#region Function Inputs
+
+    function handleInputChange(event : ChangeEvent<HTMLInputElement>){
+        const { name, value } = event.target;
+        setFormData({...formData, [name]: value });
+    }
+
+    function handleSelect(event : any){
+        console.log(event.target.value)
+        setSelectedCompany(event.target.value); 
+    }
+
+    function handleRadioChange(event : ChangeEvent<HTMLInputElement>){
+        const { value } = event.target;
+        let formName = '';
+        if(value === 'worker')
+            formName = 'Funcionário'
+        else
+            formName = 'Empresa'
+        setFormValue({
+            ...formValue,
+            type : value,
+            formName: formName,
+        });
+    }
+
+    //#endregion
+
+    async function registerUser( event : FormEvent ){
+        event.preventDefault();
+        let userData = {  
+            ds_email : '',
+            ds_senha : '',
+            ds_nome : '',
+            ds_cpf : '',
+            ds_telefone :'',
+            id_emp : ''
+        };
+
+        userData.ds_email = formData.ds_email;
+        userData.ds_senha = formData.ds_senha;
+        userData.ds_cpf = formData.ds_cpf;
+        userData.ds_nome = formData.ds_nome;
+        userData.ds_telefone = formData.ds_telefone;
+        userData.id_emp = selectedCompany;
+
+        //Separar em uma outra função, pois tenho que validar o CPF também, e o e-mail.
+        if(userData.ds_senha !== formData.ds_senha_confirm){
+            swal({
+                title: "Erro!",
+                text: "As senhas não batem!",
+                icon: "error"
+              });
+        }  
+        else{
+            api.request({
+                method: 'POST',
+                url: `users`,
+                data:{
+                    userData : userData
+                }
+            })
+            .then(function(response){
+                if(response.data.valid){
+                    swal({
+                        title: "Sucesso!",
+                        text: "Usuário Cadastrado com sucesso!",
+                        icon: "success"
+                      });
+                      history.push('/login');
+                }   
+                else{
+                    swal({
+                        title: "Erro!",
+                        text: response.data.message,
+                        icon: "error"
+                      });
+                }
+            }).catch(function(err){
+                swal({
+                    title: "Erro!",
+                    text: err,
+                    icon: "error"
+                  });
+            });
+        }    
+
+    }
+
+    async function registerCompany(){
+        console.log("eaer");
+    }
+    useEffect(() => {
+        api.request({
+            method: 'GET',
+            url: `/companies`,
+        })
+        .then(function(response){
+            if(response.data.companyData){
+                setCompanies(response.data.companyData);
+            }   
+            else{
+                swal({
+                    title: "Erro!",
+                    text: response.data.message,
+                    icon: "error"
+                  });
+            }
+        }).catch(function(err){});
+    },[])
+
+    return (
+        <div id="page-create-point">
+            <header>
+                <Header />
+                <Link to="/">
+                    <FiArrowLeft />
+                    Voltar para home
+                </Link>
+            </header>
+                {
+                    formValue.type === 'worker' ? <UserForm /> : <CompanyForm />
+                }
         </div> 
     );
 }
 
-export default CreatePoint;
+export default Register;
