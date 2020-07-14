@@ -54,6 +54,9 @@ export default function Deposits() {
       });
   }
   const classes = useStyles();
+  useEffect(()=>{
+    getData()
+  },[])
   return (
     <React.Fragment>
       <Title>Funcionarios com Sintomas</Title>

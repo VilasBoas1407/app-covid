@@ -12,6 +12,7 @@ import api from '../../services/api'
 let rows = [];
 function createData(array) {
   array.forEach(element => {
+    element.dt_data = element.dt_data.substr(0, 10).split('-').reverse().join('/')
     rows.push(Object.values(element));
   });
 }
