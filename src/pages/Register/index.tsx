@@ -116,7 +116,6 @@ const Register = () => {
     }
 
     function handleSelect(event : any){
-        console.log(event.target.value)
         setSelectedCompany(event.target.value); 
     }
 
