@@ -19,7 +19,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 // import NotificationsIcon from '@material-ui/icons/Notifications';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { mainListItems, secondaryListItems } from './listItems';
+import { mainListItems } from './listItems';
 import Chart from './Chart';
 import User from './Users';
 import Orders from './Orders';
@@ -148,7 +148,7 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
+            Acompanhamento
           </Typography>
           <IconButton color="inherit">
               <ExitToAppIcon />
@@ -163,7 +163,7 @@ export default function Dashboard() {
         open={open}
       >
         <div className={classes.toolbarIcon}>
-        <img src={logo} alt="covid-icon" height="88px" width="208px"/>
+        <img src={logo} alt="covid-icon" height="64px" width="208px"/>
 
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
@@ -173,8 +173,7 @@ export default function Dashboard() {
 
         <Divider />
         <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
+
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

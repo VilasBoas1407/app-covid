@@ -1,32 +1,70 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useTheme } from '@material-ui/core/styles';
 import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
 import Title from './Title';
-
+import api from '../../services/api'
 // Generate Sales Data
-function createData(time, amount) {
-  return { time, amount };
+function createData(day, employes) {
+  return { day, employes };
 }
-
-const data = [
-  createData('00:00', 0),
-  createData('03:00', 300),
-  createData('06:00', 600),
-  createData('09:00', 800),
-  createData('12:00', 1500),
-  createData('15:00', 2000),
-  createData('18:00', 2400),
-  createData('21:00', 5000),
-  createData('21:30', 64000),
-  createData('24:00', undefined),
-];
+function getNPeople(date,array){
+  let number = 0
+  if(array != undefined){
+    array.forEach(element => {
+      let symptom = element.id_sintoma.split(',')
+      if(symptom !=''){
+        number++
+      }
+    });
+  }
+  data.unshift({day:date.substr(0, 10).split('-').reverse().join('/'),employes:number})
+  
+}
+const data = [];
 
 export default function Chart() {
   const theme = useTheme();
+  async function collectData(dia){
+    //date transform
+    let date = new Date()
+    date.setDate(date.getDate() - dia);
+    date = date.toJSON().slice(0,10)
 
+    const tokem = await localStorage.getItem("token");
+    let usuario = await localStorage.getItem("userData")
+    if(usuario){
+      usuario = JSON.parse(usuario)
+    }
+    
+    
+    
+    api.request({
+        method: 'GET',
+        url: `/followup`,
+        params:{
+          'dt_data': date
+        },
+        headers:{
+          'x-access-token': tokem,
+        },
+        
+      }).then(function(response){
+        
+        getNPeople(date,response.data.userData)
+      
+      }).catch(function(err){
+            console.log(err)
+          
+      });
+  }
+  useEffect(()=>{
+    for(let i=0;i<7;i++){
+      collectData(i)
+    }
+  },[]);
   return (
     <React.Fragment>
-      <Title>Hoje</Title>
+      <Title>Semana</Title>
       <ResponsiveContainer>
         <LineChart
           data={data}
@@ -37,17 +75,18 @@ export default function Chart() {
             left: 24,
           }}
         >
-          <XAxis dataKey="time" stroke={theme.palette.text.secondary} />
+          <XAxis dataKey="day" stroke={theme.palette.text.secondary} />
           <YAxis stroke={theme.palette.text.secondary}>
             <Label
               angle={270}
+              size="small"
               position="left"
               style={{ textAnchor: 'middle', fill: theme.palette.text.primary }}
             >
-              Sales ($)
+              Colaborador c/ sintoma.
             </Label>
           </YAxis>
-          <Line type="monotone" dataKey="amount" stroke={theme.palette.primary.main} dot={false} />
+          <Line type="monotone" dataKey="employes" stroke={theme.palette.primary.main} dot={false} />
         </LineChart>
       </ResponsiveContainer>
     </React.Fragment>
