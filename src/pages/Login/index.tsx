@@ -68,9 +68,7 @@ const Login = () => {
     async function SubmitToLogin( event : FormEvent ){
         event.preventDefault();
 
-
         const { ds_email, ds_senha} = formData;
-        console.log(selectedType);
 
         if(selectedType === 'worker'){
             api.request({
