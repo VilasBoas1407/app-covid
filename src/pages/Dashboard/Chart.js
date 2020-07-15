@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import { useTheme } from '@material-ui/core/styles';
 
 import Title from './Title';
 import api from '../../services/api'
 import TChart from '../../components/Dashboard/Chart'
+
 // Generate Sales Data
 export default function Chart() {
   let dados = []
   const [data, setData] = useState([]);
+
   async function createData() {
     for(let i=0;i<7;i++){
       await collectData(i)
@@ -15,6 +16,7 @@ export default function Chart() {
     
     setData(dados)
   }
+
   async function getNPeople(date,array){
     let number = 0
     if(array != undefined){
@@ -28,7 +30,7 @@ export default function Chart() {
     dados.unshift({day:date,employes:number})
     
   }
-  const theme = useTheme();
+
   async function collectData(dia){
     //date transform
     let date = new Date()
@@ -37,10 +39,10 @@ export default function Chart() {
     date = date.toLocaleDateString().split('/').reverse().join('-')
     const tokem = await localStorage.getItem("token");
     let usuario = await localStorage.getItem("userData")
+    
     if(usuario){
       usuario = JSON.parse(usuario)
     }
-    
     
     
     api.request({

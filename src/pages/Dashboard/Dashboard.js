@@ -144,6 +144,11 @@ export default function Dashboard() {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+
+  function handleLogOut(){
+    localStorage.clear();
+    history.push('/');
+  }
   useEffect(()=>{
     validateUser(); 
   },[]);
@@ -166,7 +171,7 @@ export default function Dashboard() {
             Acompanhamento
           </Typography>
           <IconButton color="inherit">
-              <ExitToAppIcon />
+              <ExitToAppIcon onClick={handleLogOut}/>
           </IconButton>
         </Toolbar>
       </AppBar>
