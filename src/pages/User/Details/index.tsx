@@ -4,6 +4,11 @@ import { FiArrowLeft } from 'react-icons/fi';
 
 import swal from 'sweetalert';
 
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Grid from '@material-ui/core/Grid';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 import Header from '../../../components/Header';
 import InputFeel from '../../../components/Layout/InputFeel';
 
@@ -38,7 +43,6 @@ const Details = () => {
     }
 
     function loadSintomas(){
-
         api.request({
             method : 'GET',
             url : '/symptoms',
@@ -80,7 +84,7 @@ const Details = () => {
                 {/* <label>Último acesso: 05/07/2020 21:30</label> */}
             </div>
             <form>
-                <label>Preencha o formulário de acordo com o que está sentido hoje :</label>
+                <label className="title">Preencha o formulário de acordo com o que está sentido hoje :</label>
                 <br/>
      
                 {sintomas.map(function(sintoma: sintoma){
@@ -95,6 +99,70 @@ const Details = () => {
                     )
                 })
                 }
+
+                <br/>
+                <label className="title">Em relação a sua empresa:</label>
+                <br/>
+                <label>Você usa EPI'S na sua empresa?</label>
+                <RadioGroup aria-label="quiz" name="type">
+                    <Grid container spacing={3}>
+                        <Grid item>
+                            <FormControlLabel 
+                                value="worker" 
+                                control={<Radio />} 
+                                label="Sim"
+                            />
+                        </Grid>
+                        <Grid item>
+                            <FormControlLabel 
+                                value="company" 
+                                control={<Radio />} 
+                                label="Não"
+                            />
+                        </Grid>  
+                    </Grid>
+                </RadioGroup>
+                <br/>
+                <label>Você recebeu EPI'S  da sua empresa  ?</label>
+                <RadioGroup aria-label="quiz" name="type">
+                    <Grid container spacing={3}>
+                        <Grid item>
+                            <FormControlLabel 
+                                value="worker" 
+                                control={<Radio />} 
+                                label="Sim"
+                            />
+                        </Grid>
+                        <Grid item>
+                            <FormControlLabel 
+                                value="company" 
+                                control={<Radio />} 
+                                label="Não"
+                            />
+                        </Grid>  
+                    </Grid>
+                </RadioGroup>
+                <br/>
+                <label>Você recebeu treinamento sobre o uso de EPI'S ?</label>
+                <RadioGroup aria-label="quiz" name="type">
+                    <Grid container spacing={3}>
+                        <Grid item>
+                            <FormControlLabel 
+                                value="worker" 
+                                control={<Radio />} 
+                                label="Sim"
+                            />
+                        </Grid>
+                        <Grid item>
+                            <FormControlLabel 
+                                value="company" 
+                                control={<Radio />} 
+                                label="Não"
+                            />
+                        </Grid>  
+                    </Grid>
+                </RadioGroup>
+                <br/>
                 <button type="submit">
                         Salvar
                     </button>
