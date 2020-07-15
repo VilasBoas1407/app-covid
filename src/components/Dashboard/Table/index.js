@@ -1,0 +1,34 @@
+import React, { useState, useEffect } from 'react';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+import TableHead from '@material-ui/core/TableHead';
+import Table from '@material-ui/core/Table';
+
+export default function TBody(props){
+    const { rows } = props
+    rows.map(row =>{
+    })
+    return(
+        <Table size="small">
+        <TableHead>
+          <TableRow>
+            <TableCell>Data</TableCell>
+            <TableCell>Nome</TableCell>
+            <TableCell>Sintomas</TableCell>
+            <TableCell>Telefone</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+              <TableRow key={row[0]}>
+              <TableCell>{row[2]}</TableCell>
+              <TableCell>{row[3]}</TableCell>
+              <TableCell>{row[1]}</TableCell>
+              <TableCell>{row[4]}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+        </Table>
+    );
+}
