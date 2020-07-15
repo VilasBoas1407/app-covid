@@ -1,17 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import { useTheme } from '@material-ui/core/styles';
-import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
+
 import Title from './Title';
 import api from '../../services/api'
+import TChart from '../../components/Dashboard/Chart'
 // Generate Sales Data
-function createData(day, employes) {
-  return { day, employes };
-  
-}
 export default function Chart() {
-  const [data, setData] = useState([]);
   let dados = []
-  function getNPeople(date,array){
+  const [data, setData] = useState([]);
+  async function createData() {
+    for(let i=0;i<7;i++){
+      await collectData(i)
+    }
+    
+    setData(dados)
+  }
+  async function getNPeople(date,array){
     let number = 0
     if(array != undefined){
       array.forEach(element => {
@@ -21,8 +25,8 @@ export default function Chart() {
         }
       });
     }
-    dados.unshift({day:date.substr(0, 10).split('-').reverse().join('/'),employes:number})
-    setData(dados)
+    dados.unshift({day:date,employes:number})
+    
   }
   const theme = useTheme();
   async function collectData(dia){
@@ -59,37 +63,12 @@ export default function Chart() {
       });
   }
   useEffect(()=>{
-    for(let i=0;i<7;i++){
-      collectData(i)
-    }
+    createData()
   },[]);
   return (
     <React.Fragment>
       <Title>Semana</Title>
-      <ResponsiveContainer>
-        <LineChart
-          data={data}
-          margin={{
-            top: 16,
-            right: 16,
-            bottom: 0,
-            left: 24,
-          }}
-        >
-          <XAxis dataKey="day" stroke={theme.palette.text.secondary} />
-          <YAxis stroke={theme.palette.text.secondary}>
-            <Label
-              angle={270}
-              size="small"
-              position="left"
-              style={{ textAnchor: 'middle', fill: theme.palette.text.primary }}
-            >
-              Colaborador c/ sintoma.
-            </Label>
-          </YAxis>
-          <Line type="monotone" dataKey="employes" stroke={theme.palette.primary.main} dot={false} />
-        </LineChart>
-      </ResponsiveContainer>
+      <TChart data={data}/>
     </React.Fragment>
   );
 }

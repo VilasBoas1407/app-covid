@@ -7,7 +7,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import api from '../../services/api'
-import TBody from '../../components/Table'
+import TBody from '../../components/Dashboard/Table'
 
 // Generate Order Data
 

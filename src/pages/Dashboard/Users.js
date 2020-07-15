@@ -25,7 +25,6 @@ export default function Deposits() {
         }
       });
     }
-    console.log(number)
     await setTotal(number)
   }
   const[total, setTotal] = useState(0);
