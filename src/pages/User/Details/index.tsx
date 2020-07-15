@@ -45,9 +45,8 @@ const Details = () => {
             headers :{
                 'x-access-token' : token
             },
-        }).then(async function(response){
-            await setSintomas(response.data.sysmtomsData);
-            console.log(sintomas);
+        }).then(function(response){
+            setSintomas(response.data.sysmtomsData);
         }).catch(function(err){
             swal({
                 title: "Erro!",

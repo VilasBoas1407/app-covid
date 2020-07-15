@@ -122,7 +122,7 @@ const Login = () => {
     
                     localStorage.setItem("userData", JSON.stringify(userData));
                     localStorage.setItem("token",response.data.token);
-    
+                    localStorage.setItem("loginUser", "false");
                     history.push('/comp/Dashboard');
                   }
                   else{
