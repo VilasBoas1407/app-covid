@@ -1,25 +1,16 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import api from '../../services/api'
-// Generate Order Data
-let rows = [];
-function createData(array) {
-  array.forEach(element => {
-    element.dt_data = element.dt_data.substr(0, 10).split('-').reverse().join('/')
-    rows.push(Object.values(element));
-  });
-}
+import TBody from '../../components/Table'
 
-function preventDefault(event) {
-  event.preventDefault();
-}
+// Generate Order Data
+
 
 const useStyles = makeStyles((theme) => ({
   seeMore: {
@@ -27,8 +18,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let nRows= 0
 export default function Orders() {
-  async function getData(){
+  function preventDefault(event) {
+    event.preventDefault();
+    getData()
+  }
+    async function getData(){
     const tokem = await localStorage.getItem("token");
     let usuario = await localStorage.getItem("userData")
     if(usuario){
@@ -36,7 +32,7 @@ export default function Orders() {
     }
     
     api.request({
-        method: 'GET',
+      method: 'GET',
         url: `/followup`,
         params:{
           'id_emp': usuario.id_emp
@@ -44,42 +40,40 @@ export default function Orders() {
         headers:{
           'x-access-token': tokem,
         },
-      
-      }).then(function(response){
-        createData(response.data.userData)
-      
+        
+      }).then(async function(response){
+        
+        await createData(response.data.userData)
       }).catch(function(err){
-            console.log(err)
-          
+        console.log(err)
+        
       });
     }
-  const classes = useStyles();
-  useEffect(()=>{
-    getData()
-  },[rows]);
-  return (
-    <React.Fragment>
+    const [rows, setRows] = useState([])
+    async function createData(array){
+      let data = []
+      console.log(nRows)
+      nRows+=5
+      console.log(array[0].dt_data)
+      for(let i=0; i<nRows; i++) {
+        if(array[i])
+        
+        array[i].dt_data = array[i].dt_data.substr(0, 10).split('-').reverse().join('/')
+        data.push(Object.values(array[i]));
+      };
+      setRows(data)
+      
+    }
+   
+    const classes = useStyles();
+    useEffect(()=>{
+     getData()
+    },[]);
+    return (
+      <React.Fragment>
       <Title>Funcionarios</Title>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Data</TableCell>
-            <TableCell>Nome</TableCell>
-            <TableCell>Sintomas</TableCell>
-            <TableCell>Telefone</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row[0]}>
-              <TableCell>{row[2]}</TableCell>
-              <TableCell>{row[3]}</TableCell>
-              <TableCell>{row[1]}</TableCell>
-              <TableCell>{row[4]}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      
+        <TBody rows = {rows}/>
       <div className={classes.seeMore}>
         <Link color="primary" href="#" onClick={preventDefault}>
           Ver mais
@@ -88,3 +82,23 @@ export default function Orders() {
     </React.Fragment>
   );
 }
+/*
+ async function createData(array) {
+      nRows=+5;
+      //let array =  await getData()
+      array.forEach(element => {
+        element.dt_data = element.dt_data.substr(0, 10).split('-').reverse().join('/')
+        rows.push(Object.values(element));
+      });
+      rows = rows.splice(0,1)
+      //await setRows(rows)
+      return rows;
+      //console.log(rows[0])
+      /*
+      for(let i=0; i<=nRows; i++) {
+        array[i].dt_data = array[i].dt_data.substr(0, 10).split('-').reverse().join('/')
+        rows.push(Object.values(array[i]));
+      }
+      
+    }
+    */
