@@ -52,9 +52,7 @@ export default function Orders() {
     const [rows, setRows] = useState([])
     async function createData(array){
       let data = []
-      console.log(nRows)
       nRows+=5
-      console.log(array[0].dt_data)
       for(let i=0; i<nRows; i++) {
         if(array[i])
         

@@ -1,23 +1,12 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from './Title';
 import api from '../../services/api'
+import { get } from 'http';
 function preventDefault(event) {
   event.preventDefault();
-}
-function getNPeople(array){
-  let number = 0
-  if(array != undefined){
-    array.forEach(element => {
-      let symptom = element.id_sintoma.split(',')
-      if(symptom !=''){
-        number++
-      }
-    });
-  }
-  return number
 }
 const useStyles = makeStyles({
   depositContext: {
@@ -26,8 +15,21 @@ const useStyles = makeStyles({
 });
 
 export default function Deposits() {
-  let total;
-  let day = new Date().toISOString().substr(0, 10).split('-').reverse().join('/')
+  async function getNPeople(array){
+    let number = 0
+    if(array != undefined){
+      array.forEach(element => {
+        let symptom = element.id_sintoma.split(',')
+        if(symptom !=''){
+          number++
+        }
+      });
+    }
+    console.log(number)
+    await setTotal(number)
+  }
+  const[total, setTotal] = useState(0);
+  let day = new Date().toLocaleDateString().substr(0, 10).split('-').reverse().join('/')
   async function getData(){
     const tokem = await localStorage.getItem("token");
     let usuario = await localStorage.getItem("userData")
@@ -45,9 +47,8 @@ export default function Deposits() {
           'x-access-token': tokem,
         },
       
-      }).then(function(response){
-        total = getNPeople(response.data.userData)
-        
+      }).then(async function(response){
+        await getNPeople(response.data.userData)
       }).catch(function(err){
             console.log(err)
           
@@ -59,7 +60,7 @@ export default function Deposits() {
   },[])
   return (
     <React.Fragment>
-      <Title>Funcionarios com Sintomas</Title>
+      <Title>Funcionários com Sintomas</Title>
       <Typography component="p" variant="h4">
        {total}
       </Typography>
