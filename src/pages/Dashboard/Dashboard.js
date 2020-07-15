@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -24,6 +24,7 @@ import Chart from './Chart';
 import User from './Users';
 import Orders from './Orders';
 
+import { useHistory } from 'react-router-dom';
 
 import logo from '../../assets/abrasel/logo.png';
 
@@ -123,6 +124,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard() {
+
+  const history = useHistory();
+
+  function validateUser(){
+    const login = localStorage.getItem('loginUser');
+
+    if(login === true || login === null || login === '')
+      history.push('/');
+    } 
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -132,6 +142,10 @@ export default function Dashboard() {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  useEffect(()=>{
+    validateUser(); 
+  },[]);
 
   return (
     <div className={classes.root}>
