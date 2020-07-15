@@ -1,49 +1,69 @@
-import React,{ useEffect } from 'react';  
+import React,{ useEffect, useState } from 'react';  
 import { useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
+
+import swal from 'sweetalert';
 
 import Header from '../../../components/Header';
 import InputFeel from '../../../components/Layout/InputFeel';
 
+import api from '../../../services/api';
+
 import './styles.css';
 
-
-interface user{
-
-    ds_email : string,
-    ds_senha : string,
-    ds_senha_confirm: string,
-    ds_nome : string,
-    ds_cnpj : string,
-    ds_telefone :string,
-    id_emp : number
+interface sintoma {
+    ds_sintoma : string,
+    id_sintoma: number
 }
-
 const Details = () => {
 
     const history = useHistory();
+
+    const[userData,setUserData] = useState({
+        ds_email : '',
+        ds_senha : '',
+        ds_nome : '',
+        ds_cpf : '',
+        ds_telefone :'',
+        id_emp : ''
+    });
+
+    const token = localStorage.getItem('token');
+
+    const [sintomas,setSintomas] = useState([]);
 
     function doLogout(){
         localStorage.clear();
         history.push('/');
     }
 
+    function loadSintomas(){
+
+        api.request({
+            method : 'GET',
+            url : '/symptoms',
+            headers :{
+                'x-access-token' : token
+            },
+        }).then(async function(response){
+            await setSintomas(response.data.sysmtomsData);
+            console.log(sintomas);
+        }).catch(function(err){
+            swal({
+                title: "Erro!",
+                text: "Ocorreu um erro interno, favor contatar a administração : " + err,
+                icon: "error"
+              });
+        })
+
+    }
     useEffect(() => {
-        
-        let userData ={
-            ds_email : '',
-            ds_senha : '',
-            ds_nome : '',
-            ds_cpf : '',
-            ds_telefone :'',
-            id_emp : ''
-        };
 
         var user = localStorage.getItem('userData');
         if(user)
-            userData = (JSON.parse(user))
+            setUserData(JSON.parse(user));
 
-        const token = localStorage.getItem('token');
+        loadSintomas()
     },[])
     return(
         <div id="page-details">
@@ -56,31 +76,26 @@ const Details = () => {
             </header>
 
             <div className="user-data">
-                <h1>Olá,Lucas!</h1>
+                <h1>Olá, {userData.ds_nome}!</h1>
                 <br/>
-                <label>Último acesso: 05/07/2020 21:30</label>
+                {/* <label>Último acesso: 05/07/2020 21:30</label> */}
             </div>
             <form>
                 <label>Preencha o formulário de acordo com o que está sentido hoje :</label>
                 <br/>
-                <div className="field-group"> 
-                    <div className="check-box row">
-                        <InputFeel label={"Febre"} name={"Febre"}/>
-                        <label>Febre</label>
-                    </div>
-                    <div className="check-box row">
-                        <InputFeel label={"Tosse seca"}  name={"TosseSeca"}/>
-                        <label>Tosse seca</label>
-                    </div>
-                    <div className="check-box row">
-                        <InputFeel label={"Cansaço"}  name={"Cansaco"}/>
-                        <label>Cansaço</label>
-                    </div>
-                    <div className="check-box row">
-                        <InputFeel label={"Febre"} name={"Febre"}/>
-                        <label>Febre</label>
-                    </div>
-                </div>
+     
+                {sintomas.map(function(sintoma: sintoma){
+                    return(
+                        <div className="field-group"> 
+                            <div className="check-box row">
+                                <InputFeel label={sintoma.ds_sintoma} name={sintoma.ds_sintoma}/>
+                                <label>{sintoma.ds_sintoma}</label>
+                                <br/>
+                            </div>
+                      </div>
+                    )
+                })
+                }
                 <button type="submit">
                         Salvar
                     </button>
