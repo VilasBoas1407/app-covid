@@ -29,6 +29,10 @@ export default function Deposits() {
   }
   const[total, setTotal] = useState(0);
   let day = new Date().toLocaleDateString().substr(0, 10).split('-').reverse().join('/')
+  let date = new Date()
+    
+  date.setDate(date.getDate());
+  date = date.toLocaleDateString().split('/').reverse().join('-')
   async function getData(){
     const tokem = await localStorage.getItem("token");
     let usuario = await localStorage.getItem("userData")
@@ -40,7 +44,8 @@ export default function Deposits() {
         method: 'GET',
         url: `/followup`,
         params:{
-          'id_emp': usuario.id_emp
+          'id_emp': usuario.id_emp,
+          'dt_data': date
         },
         headers:{
           'x-access-token': tokem,

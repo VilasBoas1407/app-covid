@@ -7,6 +7,7 @@ import Table from '@material-ui/core/Table';
 
 export default function TBody(props){
     const { rows } = props
+    //console.log(rows)
     rows.map(row =>{
     })
     return(
@@ -17,15 +18,17 @@ export default function TBody(props){
             <TableCell>Nome</TableCell>
             <TableCell>Sintomas</TableCell>
             <TableCell>Telefone</TableCell>
+            <TableCell>Utilizou EPI?</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
               <TableRow key={row[0]}>
+              <TableCell>{row[1]}</TableCell>
               <TableCell>{row[2]}</TableCell>
               <TableCell>{row[3]}</TableCell>
-              <TableCell>{row[1]}</TableCell>
               <TableCell>{row[4]}</TableCell>
+              <TableCell>{row[5]}</TableCell>
             </TableRow>
           ))}
         </TableBody>

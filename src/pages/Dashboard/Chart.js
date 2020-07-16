@@ -10,11 +10,6 @@ export default function Chart() {
   const [data, setData] = useState([]);
 
   async function createData() {
-    for(let i=0;i<7;i++){
-      await collectData(i)
-    }
-    
-    setData(dados)
   }
 
   async function getNPeople(date,array){
@@ -31,41 +26,44 @@ export default function Chart() {
     
   }
 
-  async function collectData(dia){
-    //date transform
-    let date = new Date()
-    
-    date.setDate(date.getDate() - dia);
-    date = date.toLocaleDateString().split('/').reverse().join('-')
-    const tokem = await localStorage.getItem("token");
-    let usuario = await localStorage.getItem("userData")
-    
-    if(usuario){
-      usuario = JSON.parse(usuario)
-    }
-    
-    
-    api.request({
-        method: 'GET',
-        url: `/followup`,
-        params:{
-          'dt_data': date
-        },
-        headers:{
-          'x-access-token': tokem,
-        },
-        
-      }).then(function(response){
-        
-        getNPeople(date,response.data.userData)
+  async function collectData(){
+    for(let dia=0;dia<7;dia++){
+      //date transform
+      let date = new Date()
+      date.setDate(date.getDate() - dia);
       
-      }).catch(function(err){
-            console.log(err)
+      date = date.toLocaleDateString().split('/').reverse().join('-')
+      const tokem = await localStorage.getItem("token");
+      let usuario = await localStorage.getItem("userData")
+      
+      if(usuario){
+        usuario = JSON.parse(usuario)
+      }
+      
+      
+      await api.request({
+          method: 'GET',
+          url: `/followup`,
+          params:{
+            'dt_data': date
+          },
+          headers:{
+            'x-access-token': tokem,
+          },
           
-      });
+        }).then(async function(response){
+          
+          await getNPeople(date,response.data.userData)
+        
+        }).catch(function(err){
+              console.log(err)
+            
+        }); 
+    }
+    setData(dados)
   }
   useEffect(()=>{
-    createData()
+    collectData()
   },[]);
   return (
     <React.Fragment>

@@ -18,6 +18,7 @@ import Input from '../../components/Layout/Input';
 import user from '../../assets/people/login.png';
 
 import api from '../../services/api'
+import { Container } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -158,7 +159,7 @@ const Login = () => {
                     Voltar para home
                 </Link>
             </header>
-            <div className="content">
+            <Container component='main' maxWidth='xs' className="content">
 
                 <form onSubmit={SubmitToLogin} className="form">
                     <img src={user} alt="people"  width="300px" height="300px"/>
@@ -195,7 +196,7 @@ const Login = () => {
                     </button>
                 </form>
                     
-            </div>
+            </Container>
         </div>
     )
 };

@@ -50,9 +50,12 @@ export default function Orders() {
       let data = []
       nRows+=5
       for(let i=0; i<nRows; i++) {
-        if(array[i])
-        
-        array[i].dt_data = array[i].dt_data.substr(0, 10).split('-').reverse().join('/')
+        if(array[i].ds_usa_epi){
+          array[i].ds_usa_epi = 'Sim' 
+        }else{
+          array[i].ds_usa_epi = 'Não' 
+        }
+          array[i].dt_data = array[i].dt_data.substr(0, 10).split('-').reverse().join('/')
         data.push(Object.values(array[i]));
       };
       setRows(data)
