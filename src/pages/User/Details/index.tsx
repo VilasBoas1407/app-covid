@@ -39,8 +39,6 @@ const Details = () => {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('userData');
     
-    console.log(userData);
-
     function doLogout(){
         localStorage.clear();
         history.push('/');
@@ -67,7 +65,7 @@ const Details = () => {
     useEffect(() => {
 
         var user = localStorage.getItem('userData');
-        console.log(user)
+
         if(user){
             setUserData(JSON.parse(user));
             loadSintomas();

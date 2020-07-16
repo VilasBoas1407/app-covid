@@ -40,9 +40,7 @@ export default function Orders() {
       }).then(async function(response){
         
         await createData(response.data.userData)
-      }).catch(function(err){
-        console.log(err)
-        
+      }).catch(function(err){        
       });
     }
     const [rows, setRows] = useState([])
@@ -79,23 +77,3 @@ export default function Orders() {
     </React.Fragment>
   );
 }
-/*
- async function createData(array) {
-      nRows=+5;
-      //let array =  await getData()
-      array.forEach(element => {
-        element.dt_data = element.dt_data.substr(0, 10).split('-').reverse().join('/')
-        rows.push(Object.values(element));
-      });
-      rows = rows.splice(0,1)
-      //await setRows(rows)
-      return rows;
-      //console.log(rows[0])
-      /*
-      for(let i=0; i<=nRows; i++) {
-        array[i].dt_data = array[i].dt_data.substr(0, 10).split('-').reverse().join('/')
-        rows.push(Object.values(array[i]));
-      }
-      
-    }
-    */
