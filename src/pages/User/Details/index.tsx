@@ -84,15 +84,18 @@ const Details = () => {
                     idUser: '10101'
                 },
             }).then(function(response){
-                swal({
-                    title: "Obrigado!",
-                    text:"Mas você já respondeu hoje! Volte amanhã",
-                    icon: "success",
-                })
-                .then(() => {
-                    localStorage.clear();
-                    history.push('/');
-                });
+                if(!response.data.valid){
+                    swal({
+                        title: "Obrigado!",
+                        text:"Mas você já respondeu hoje! Volte amanhã",
+                        icon: "success",
+                    })
+                    .then(() => {
+                        localStorage.clear();
+                        history.push('/');
+                    });
+                }
+
             }).catch(function(err){
                 swal({
                     title: "Erro!",
