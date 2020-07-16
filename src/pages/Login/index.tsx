@@ -150,16 +150,16 @@ const Login = () => {
     }
     
     return(
-        <div id="page-login">
+        <Container component='main' maxWidth='xs' id="page-login">
                             
-            <header>
+            <header className='header'>
                 <Header /> 
                 <Link to="/">
                     <FiArrowLeft />
                     Voltar para home
                 </Link>
             </header>
-            <Container component='main' maxWidth='xs' className="content">
+            <div className="content">
 
                 <form onSubmit={SubmitToLogin} className="form">
                     <img src={user} alt="people"  width="300px" height="300px"/>
@@ -196,8 +196,8 @@ const Login = () => {
                     </button>
                 </form>
                     
-            </Container>
-        </div>
+            </div>
+        </Container>
     )
 };
 
