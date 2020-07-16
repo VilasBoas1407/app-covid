@@ -30,12 +30,16 @@ const Details = () => {
         ds_nome : '',
         ds_cpf : '',
         ds_telefone :'',
-        id_emp : ''
+        id_emp : '',
+        id_usuario : ''
     });
+    
+    const [sintomas,setSintomas] = useState([]);
 
     const token = localStorage.getItem('token');
-
-    const [sintomas,setSintomas] = useState([]);
+    const user = localStorage.getItem('userData');
+    
+    console.log(userData);
 
     function doLogout(){
         localStorage.clear();
@@ -63,11 +67,44 @@ const Details = () => {
     useEffect(() => {
 
         var user = localStorage.getItem('userData');
-        if(user)
+        console.log(user)
+        if(user){
             setUserData(JSON.parse(user));
+            loadSintomas();
 
-        loadSintomas()
-    },[])
+            //Busca última resposta do usuário
+            
+            api.request({
+                method : 'GET',
+                url : '/lastAnswer',
+                headers :{
+                    'x-access-token' : token
+                },
+                params: {
+                    idUser: '10101'
+                },
+            }).then(function(response){
+                swal({
+                    title: "Obrigado!",
+                    text:"Mas você já respondeu hoje! Volte amanhã",
+                    icon: "success",
+                })
+                .then(() => {
+                    localStorage.clear();
+                    history.push('/');
+                });
+            }).catch(function(err){
+                swal({
+                    title: "Erro!",
+                    text: "Ocorreu um erro interno, favor contatar a administração : " + err,
+                    icon: "error"
+                });
+            });
+        }
+        else
+            history.push('/');
+
+    },[]);
     return(
         <div id="page-details">
             <header>
