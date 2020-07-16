@@ -196,9 +196,65 @@ const Register = () => {
 
     }
 
-    async function registerCompany(){
-        console.log("eaer");
+    async function registerCompany( event : FormEvent ){
+        event.preventDefault();
+
+        let companyData = {  
+            ds_email : '',
+            ds_senha : '',
+            ds_nome : '',
+            ds_cnpj : '',
+            ds_telefone :'',
+        };
+
+        companyData.ds_email = formCompany.ds_email;
+        companyData.ds_senha = formCompany.ds_senha;
+        companyData.ds_cnpj = formCompany.ds_cnpj;
+        companyData.ds_nome = formCompany.ds_nome;
+        companyData.ds_telefone = formCompany.ds_telefone;
+
+            
+        if(companyData.ds_senha !== formCompany.ds_senha_confirm){
+                swal({
+                    title: "Erro!",
+                    text: "As senhas não batem!",
+                    icon: "error"
+                });
+        }  
+        else{
+            api.request({
+                method: 'POST',
+                    url: `companies`,
+                    data:{
+                        companyData : companyData
+                    }
+                })
+                .then(function(response){
+                    if(response.data.valid){
+                        swal({
+                            title: "Sucesso!",
+                            text: response.data.message,
+                            icon: "success"
+                        });
+                        history.push('/login');
+                    }   
+                    else{
+                        swal({
+                            title: "Erro!",
+                            text: response.data.message,
+                            icon: "error"
+                        });
+                    }
+                }).catch(function(err){
+                    swal({
+                        title: "Erro!",
+                        text: "Erro:"+ err,
+                        icon: "error"
+                    });
+                });
+            }  
     }
+
     useEffect(() => {
         api.request({
             method: 'GET',
