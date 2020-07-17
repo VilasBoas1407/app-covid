@@ -53,7 +53,7 @@ export default function Orders() {
         }else{
           array[i].ds_usa_epi = 'Não' 
         }
-          array[i].dt_data = array[i].dt_data.substr(0, 10).split('-').reverse().join('/')
+          array[i].dt_consulta = array[i].dt_consulta.substr(0, 10).split('-').reverse().join('/')
         data.push(Object.values(array[i]));
       };
       setRows(data)

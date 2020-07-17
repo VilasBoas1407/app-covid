@@ -162,7 +162,7 @@ const Login = () => {
             <div className="content">
 
                 <form onSubmit={SubmitToLogin} className="form">
-                    <img src={user} alt="people"  width="300px" height="300px"/>
+                    <img src={user} alt="Pessoa com cadeado"  width="300px" height="300px"/>
                     <br/>
                     <h2>Bem Vindo de Volta!</h2>
                     <br/>

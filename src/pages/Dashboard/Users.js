@@ -45,7 +45,7 @@ export default function Deposits() {
         url: `/followup`,
         params:{
           'id_emp': usuario.id_emp,
-          'dt_data': date
+          'dt_consulta': date
         },
         headers:{
           'x-access-token': tokem,
