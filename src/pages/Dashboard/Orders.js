@@ -55,7 +55,7 @@ export default function Orders() {
         }else{
           array[i].ds_usa_epi = 'Não' 
         }
-          array[i].dt_data = array[i].dt_data.substr(0, 10).split('-').reverse().join('/')
+          array[i].dt_consulta = array[i].dt_consulta.substr(0, 10).split('-').reverse().join('/')
         data.push(Object.values(array[i]));
       };
       setRows(data)
@@ -84,7 +84,7 @@ export default function Orders() {
       nRows=+5;
       //let array =  await getData()
       array.forEach(element => {
-        element.dt_data = element.dt_data.substr(0, 10).split('-').reverse().join('/')
+        element.dt_consulta = element.dt_consulta.substr(0, 10).split('-').reverse().join('/')
         rows.push(Object.values(element));
       });
       rows = rows.splice(0,1)
@@ -93,7 +93,7 @@ export default function Orders() {
       //console.log(rows[0])
       /*
       for(let i=0; i<=nRows; i++) {
-        array[i].dt_data = array[i].dt_data.substr(0, 10).split('-').reverse().join('/')
+        array[i].dt_consulta = array[i].dt_consulta.substr(0, 10).split('-').reverse().join('/')
         rows.push(Object.values(array[i]));
       }
       
