@@ -39,8 +39,6 @@ const Details = () => {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('userData');
     
-    console.log(userData);
-
     function doLogout(){
         localStorage.clear();
         history.push('/');
@@ -67,7 +65,7 @@ const Details = () => {
     useEffect(() => {
 
         var user = localStorage.getItem('userData');
-        console.log(user)
+
         if(user){
             setUserData(JSON.parse(user));
             loadSintomas();
@@ -84,15 +82,18 @@ const Details = () => {
                     idUser: '10101'
                 },
             }).then(function(response){
-                swal({
-                    title: "Obrigado!",
-                    text:"Mas você já respondeu hoje! Volte amanhã",
-                    icon: "success",
-                })
-                .then(() => {
-                    localStorage.clear();
-                    history.push('/');
-                });
+                if(!response.data.valid){
+                    swal({
+                        title: "Obrigado!",
+                        text:"Mas você já respondeu hoje! Volte amanhã",
+                        icon: "success",
+                    })
+                    .then(() => {
+                        localStorage.clear();
+                        history.push('/');
+                    });
+                }
+
             }).catch(function(err){
                 swal({
                     title: "Erro!",

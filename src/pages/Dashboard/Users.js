@@ -53,10 +53,7 @@ export default function Deposits() {
       
       }).then(async function(response){
         await getNPeople(response.data.userData)
-      }).catch(function(err){
-            console.log(err)
-          
-      });
+      }).catch(function(err){});
   }
   const classes = useStyles();
   useEffect(()=>{

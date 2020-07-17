@@ -55,10 +55,7 @@ export default function Chart() {
           
           await getNPeople(date,response.data.userData)
         
-        }).catch(function(err){
-              console.log(err)
-            
-        }); 
+        }).catch(function(err){}); 
     }
     setData(dados)
   }

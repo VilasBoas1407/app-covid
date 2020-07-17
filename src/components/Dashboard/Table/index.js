@@ -7,7 +7,7 @@ import Table from '@material-ui/core/Table';
 
 export default function TBody(props){
     const { rows } = props
-    //console.log(rows)
+
     rows.map(row =>{
     })
     return(
