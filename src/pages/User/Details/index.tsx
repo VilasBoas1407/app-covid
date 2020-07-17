@@ -48,7 +48,6 @@ const Details = () => {
     
     async function handleSubmit( event : FormEvent){
         event.preventDefault();
-        console.log(sintomas);
         var data = {
             id_sintoma : '',
             ds_usa_epi : 0,
