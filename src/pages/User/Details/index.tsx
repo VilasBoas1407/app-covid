@@ -128,7 +128,7 @@ const Details = () => {
         sintoma.checked = !sintoma.checked;
     }
 
-    function loadSintomas(){
+    async function loadSintomas(){
         api.request({
             method : 'GET',
             url : '/symptoms',
@@ -146,14 +146,18 @@ const Details = () => {
         })
 
     }
-
-    useEffect(() => {
-
+    
+    function loadUser(value : string){
+        const user = JSON.parse(value);
+        setUserData(user);
+        return user.id_usuario;
+    }
+    async function validateScreen(){
         var user = localStorage.getItem('userData');
 
         if(user){
-            setUserData(JSON.parse(user));
-            loadSintomas();
+       
+            await loadSintomas();
 
             //Busca última resposta do usuário
             
@@ -164,7 +168,7 @@ const Details = () => {
                     'x-access-token' : token
                 },
                 params: {
-                    idUser: '10101'
+                    idUser: loadUser(user)
                 },
             }).then(function(response){
                 if(!response.data.valid){
@@ -189,6 +193,10 @@ const Details = () => {
         }
         else
             history.push('/');
+    }
+    useEffect(() => {
+
+        validateScreen();
 
     },[]);
     return(
