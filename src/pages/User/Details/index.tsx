@@ -1,4 +1,4 @@
-import React,{ useEffect, useState } from 'react';  
+import React,{ useEffect, useState, ChangeEvent, FormEvent } from 'react';  
 import { useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 
@@ -18,7 +18,8 @@ import './styles.css';
 
 interface sintoma {
     ds_sintoma : string,
-    id_sintoma: number
+    id_sintoma: number,
+    checked : boolean
 }
 const Details = () => {
 
@@ -33,15 +34,99 @@ const Details = () => {
         id_emp : '',
         id_usuario : ''
     });
-    
+
+    const [formValue, setFormValue] = useState({
+        ds_usa_epi : false,
+        ds_epi: false,
+        ds_possui_epi: false
+    });
+
     const [sintomas,setSintomas] = useState([]);
 
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('userData');
     
+    async function handleSubmit( event : FormEvent){
+        event.preventDefault();
+        console.log(sintomas);
+        var data = {
+            id_sintoma : '',
+            ds_usa_epi : 0,
+            ds_epi: 0,
+            ds_possui_epi: 0,
+            id_usuario : '',
+            dt_consulta : ''
+        }
+
+        sintomas.forEach(function(s: sintoma){
+            if(s.checked){
+                data.id_sintoma += s.ds_sintoma + ","
+            }
+        });
+
+        data.ds_epi = formValue.ds_epi ? 1 : 0;
+        data.ds_usa_epi = formValue.ds_usa_epi ? 1 : 0;
+        data.ds_possui_epi = formValue.ds_possui_epi ? 1 : 0;
+        data.id_usuario = userData.id_usuario;
+        data.dt_consulta = new Date().toLocaleDateString().split('/').reverse().join('-');
+
+        api.request({
+            method : 'POST',
+            url : '/followup',
+            headers :{
+                'x-access-token' : token
+            },
+            data: {
+                followUp: data
+            },
+        }).then(function(response){
+            if(response.data.valid){
+                swal({
+                    title: "Obrigado!",
+                    text:"Sua resposta foi computada com sucesso!",
+                    icon: "success",
+                })
+                .then(() => {
+                    localStorage.clear();
+                    history.push('/');
+                });
+            }
+            else{
+                swal({
+                    title: "Erro!",
+                    text: response.data.message,
+                    icon: "error"
+                });
+            }
+
+        }).catch(function(err){
+            swal({
+                title: "Erro!",
+                text: "Ocorreu um erro interno, favor contatar a administração : " + err,
+                icon: "error"
+            });
+        });
+    }
+
+    function handleRadioChange(event : ChangeEvent<HTMLInputElement>){
+        const { value,name } = event.target;
+        let check = false;
+        
+        if(value === "true")
+            check = true
+        setFormValue({
+            ...formValue,
+            [name] : check
+        });
+    }
+
     function doLogout(){
         localStorage.clear();
         history.push('/');
+    }
+
+    function addSintoma(sintoma : sintoma){
+        sintoma.checked = !sintoma.checked;
     }
 
     function loadSintomas(){
@@ -62,6 +147,7 @@ const Details = () => {
         })
 
     }
+
     useEffect(() => {
 
         var user = localStorage.getItem('userData');
@@ -121,7 +207,7 @@ const Details = () => {
                 <br/>
                 {/* <label>Último acesso: 05/07/2020 21:30</label> */}
             </div>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <label className="title">Preencha o formulário de acordo com o que está sentido hoje :</label>
                 <br/>
      
@@ -129,7 +215,7 @@ const Details = () => {
                     return(
                         <div className="field-group"> 
                             <div className="check-box row">
-                                <InputFeel label={sintoma.ds_sintoma} name={sintoma.ds_sintoma}/>
+                                <InputFeel label={sintoma.ds_sintoma} name={sintoma.ds_sintoma} onChange={() => addSintoma(sintoma)} value={sintoma.ds_sintoma} checked={sintoma.checked}/>
                                 <label>{sintoma.ds_sintoma}</label>
                                 <br/>
                             </div>
@@ -142,60 +228,70 @@ const Details = () => {
                 <label className="title">Em relação a sua empresa:</label>
                 <br/>
                 <label>Você usa EPI'S na sua empresa?</label>
-                <RadioGroup aria-label="quiz" name="type">
+                <RadioGroup aria-label="quiz" name="ds_epi" onChange={handleRadioChange}>
                     <Grid container spacing={3}>
                         <Grid item>
-                            <FormControlLabel 
-                                value="worker" 
+                            <FormControlLabel
+                                value={true} 
                                 control={<Radio />} 
                                 label="Sim"
+                                checked={formValue.ds_epi === true}
                             />
                         </Grid>
                         <Grid item>
                             <FormControlLabel 
-                                value="company" 
+                                value={false} 
                                 control={<Radio />} 
                                 label="Não"
+                                checked={formValue.ds_epi === false}
                             />
                         </Grid>  
                     </Grid>
                 </RadioGroup>
                 <br/>
                 <label>Você recebeu EPI'S  da sua empresa  ?</label>
-                <RadioGroup aria-label="quiz" name="type">
+                <RadioGroup aria-label="quiz" name="ds_possui_epi" onChange={handleRadioChange}>
                     <Grid container spacing={3}>
                         <Grid item>
                             <FormControlLabel 
-                                value="worker" 
+                                name="ds_possui_epi"
+                                value={true} 
                                 control={<Radio />} 
                                 label="Sim"
+                                checked={formValue.ds_possui_epi === true}
                             />
                         </Grid>
                         <Grid item>
                             <FormControlLabel 
-                                value="company" 
+                                name="ds_possui_epi"
+                                value={false} 
                                 control={<Radio />} 
                                 label="Não"
+                                checked={formValue.ds_possui_epi === false}
                             />
                         </Grid>  
                     </Grid>
                 </RadioGroup>
                 <br/>
                 <label>Você recebeu treinamento sobre o uso de EPI'S ?</label>
-                <RadioGroup aria-label="quiz" name="type">
+                <RadioGroup aria-label="quiz"  name="ds_usa_epi" onChange={handleRadioChange}>
                     <Grid container spacing={3}>
                         <Grid item>
                             <FormControlLabel 
-                                value="worker" 
+                                name="ds_usa_epi"
+                                value={true} 
                                 control={<Radio />} 
                                 label="Sim"
+                                checked={formValue.ds_usa_epi === true}
                             />
                         </Grid>
                         <Grid item>
                             <FormControlLabel 
-                                value="company" 
+                                name="ds_usa_epi"
+                                value={false}  
                                 control={<Radio />} 
                                 label="Não"
+                                checked={formValue.ds_usa_epi === false}
                             />
                         </Grid>  
                     </Grid>

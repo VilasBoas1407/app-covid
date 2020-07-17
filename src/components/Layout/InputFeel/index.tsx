@@ -3,7 +3,10 @@ import { Form } from 'react-bootstrap';
 
 interface InputProps {
     label : string,
-    name: string
+    name: string,
+    onChange: any,
+    value : string,
+    checked: boolean
 }
 
 const InputFell: React.FC<InputProps> = (props) => {
@@ -17,6 +20,9 @@ const InputFell: React.FC<InputProps> = (props) => {
                     type="checkbox"
                     id={props.name}
                     className="check-box"
+                    onChange={props.onChange}
+                    value={props.value}
+                    checked = {props.checked}
                 />
         )
       }
