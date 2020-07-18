@@ -23,7 +23,6 @@ export default function Chart() {
       });
     }
     dados.unshift({day:date,employes:number})
-    
   }
 
   async function collectData(){
