@@ -1,7 +1,15 @@
 #page-home {
-    height: 100vh;
-  
-    background: url('../../assets/home-background.png') no-repeat 980px center;
+  height: 100vh;
+
+  background: url('../../assets/home-background.png') no-repeat 50vw center;
+}
+  @media(max-width: 900px) {
+    #page-home {
+      height: 100vh;
+    
+      background: url('../../assets/home-background.png') no-repeat 500vw center;
+    }
+
   }
   
   #page-home .content {
