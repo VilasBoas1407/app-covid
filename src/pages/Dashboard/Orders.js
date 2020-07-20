@@ -47,6 +47,10 @@ export default function Orders() {
     async function createData(array){
       let data = []
       nRows+=5
+      //muda nRows de acordo com o tamanho dos dados
+      if(array.length<nRows){
+        nRows = array.length
+      }
       for(let i=0; i<nRows; i++) {
         if(array[i].ds_usa_epi){
           array[i].ds_usa_epi = 'Sim' 
