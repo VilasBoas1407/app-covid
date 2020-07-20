@@ -44,7 +44,8 @@ export default function Chart() {
           method: 'GET',
           url: `/followup`,
           params:{
-            'dt_consulta': date
+            'dt_consulta': date,
+            'id_emp': usuario.id_emp
           },
           headers:{
             'x-access-token': tokem,
