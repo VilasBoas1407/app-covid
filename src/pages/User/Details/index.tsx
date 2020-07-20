@@ -59,7 +59,7 @@ const Details = () => {
 
         sintomas.forEach(function(s: sintoma){
             if(s.checked){
-                data.id_sintoma += s.ds_sintoma + ","
+                data.id_sintoma += s.ds_sintoma + ", "
             }
         });
 
@@ -67,7 +67,7 @@ const Details = () => {
         data.ds_usa_epi = formValue.ds_usa_epi ? 1 : 0;
         data.ds_possui_epi = formValue.ds_possui_epi ? 1 : 0;
         data.id_usuario = userData.id_usuario;
-        data.dt_consulta = new Date().toLocaleDateString().split('/').reverse().join('-');
+      
 
         api.request({
             method : 'POST',
