@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import Title from './Title';
 import api from '../../services/api'
 import TChart from '../../components/Dashboard/Chart'
+import { join } from 'path';
 
 // Generate Sales Data
 export default function Chart() {
@@ -14,6 +15,7 @@ export default function Chart() {
 
   async function getNPeople(date,array){
     let number = 0
+    date = date.split('-').reverse().join('-')
     if(array != undefined){
       array.forEach(element => {
         let symptom = element.id_sintoma.split(',')
@@ -57,6 +59,7 @@ export default function Chart() {
         
         }).catch(function(err){}); 
     }
+    
     setData(dados)
   }
   useEffect(()=>{

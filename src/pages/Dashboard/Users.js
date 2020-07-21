@@ -17,10 +17,10 @@ const useStyles = makeStyles({
 export default function Deposits() {
   async function getNPeople(array){
     let number = 0
-    if(array != undefined){
+    if(array !== undefined){
       array.forEach(element => {
         let symptom = element.id_sintoma.split(',')
-        if(symptom !=''){
+        if(symptom !==''){
           number++
         }
       });
@@ -41,19 +41,19 @@ export default function Deposits() {
     }
     
     api.request({
-        method: 'GET',
-        url: `/followup`,
-        params:{
-          'id_emp': usuario.id_emp,
-          'dt_consulta': date
-        },
-        headers:{
-          'x-access-token': tokem,
-        },
+      method: 'GET',
+      url: `/followup`,
+      params:{
+        'id_emp': usuario.id_emp,
+        'dt_consulta': date
+      },
+      headers:{
+        'x-access-token': tokem,
+      },
       
-      }).then(async function(response){
-        await getNPeople(response.data.userData)
-      }).catch(function(err){});
+    }).then(async function(response){
+      await getNPeople(response.data.userData)
+    }).catch(function(err){});
   }
   const classes = useStyles();
   useEffect(()=>{
