@@ -1,10 +1,9 @@
 import React,{useEffect, useState} from 'react';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from './Title';
 import api from '../../services/api'
-import { get } from 'http';
+
 function preventDefault(event) {
   event.preventDefault();
 }
@@ -14,7 +13,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Deposits() {
+export default function Users() {
   async function getNPeople(array){
     let number = 0
     if(array !== undefined){
@@ -34,7 +33,7 @@ export default function Deposits() {
   date.setDate(date.getDate());
   date = date.toLocaleDateString().split('/').reverse().join('-')
   async function getData(){
-    const tokem = await localStorage.getItem("token");
+    const token = await localStorage.getItem("token");
     let usuario = await localStorage.getItem("userData")
     if(usuario){
       usuario = JSON.parse(usuario)
@@ -48,7 +47,7 @@ export default function Deposits() {
         'dt_consulta': date
       },
       headers:{
-        'x-access-token': tokem,
+        'x-access-token': token,
       },
       
     }).then(async function(response){
@@ -67,6 +66,13 @@ export default function Deposits() {
       </Typography>
       <Typography color="textSecondary" className={classes.depositContext}>
         {day}
+      </Typography>
+     <Title>Funcionários que não responderam no dia:</Title>
+     <Typography color="textSecondary" className={classes.depositContext}>
+        {day}
+      </Typography>
+      <Typography component="p" variant="h4">
+       {total}
       </Typography>
 
     </React.Fragment>

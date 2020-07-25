@@ -70,7 +70,7 @@ export default function Orders() {
     },[]);
     return (
       <React.Fragment>
-      <Title>Funcionarios</Title>
+      <Title>Funcionários</Title>
       
         <TBody rows = {rows}/>
       <div className={classes.seeMore}>
