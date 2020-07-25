@@ -15,7 +15,7 @@ const Home = () => {
                 <Header />
                 <main>
                     <h1>Ajude sua empresa a combater o COVID-19.</h1>
-                    <p>Responda este questiónario diariamente sobre como está se sentindo.</p>
+                    <p>Responda este questionário diariamente sobre como está se sentindo.</p>
 
                     <div className="row">
                         <Link to="/login">

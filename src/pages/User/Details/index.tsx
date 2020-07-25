@@ -281,7 +281,7 @@ const Details = () => {
                 </RadioGroup>
                 <br/>
                 <label>Você recebeu treinamento sobre o uso de EPI'S ?</label>
-                <RadioGroup aria-label="quiz"  name="ds_usa_epi" onChange={handleRadioChange}>
+                <RadioGroup aria-label="quiz" name="ds_usa_epi" onChange={handleRadioChange}>
                     <Grid container spacing={3}>
                         <Grid item>
                             <FormControlLabel 

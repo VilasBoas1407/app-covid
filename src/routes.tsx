@@ -6,6 +6,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Details from './pages/User/Details';
 import Dashboard from './pages/Dashboard/Dashboard';
+import ListUser from './pages/Dashboard/User/ListUser';
+
 const Routes = () => {
     return (
         <BrowserRouter>
@@ -14,6 +16,7 @@ const Routes = () => {
             <Route component={Register} path="/create-account" />
             <Route component={Details} path="/user/Details"/>
             <Route component={Dashboard} path="/comp/Dashboard"/>
+            <Route component={ListUser} path="/user/List"/>
         </BrowserRouter>
     );
 }
