@@ -5,6 +5,8 @@ import TableRow from '@material-ui/core/TableRow';
 import TableHead from '@material-ui/core/TableHead';
 import Table from '@material-ui/core/Table';
 
+import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
+
 export default function THeaderUser(props){
     const { rows } = props
 
@@ -25,8 +27,10 @@ export default function THeaderUser(props){
               <TableCell>{row[1]}</TableCell>
               <TableCell>{row[2]}</TableCell>
               <TableCell>{row[3]}</TableCell>
-              <TableCell>{row[4]}</TableCell>
-              <TableCell>{row[5]}</TableCell>
+              <TableCell>Visualizar</TableCell>
+              <TableCell>
+                <PictureAsPdfIcon/>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
