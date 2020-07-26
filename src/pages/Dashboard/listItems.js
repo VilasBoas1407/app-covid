@@ -11,22 +11,22 @@ import { Link } from 'react-router-dom';
 export const mainListItems = (
   
   <div>
-    <ListItem button>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <Link to="/comp/Dashboard" style={{ textDecoration: 'none' }}>
-        <ListItemText primary="Dashboard" />
+      <Link to="/comp/Dashboard" style={{ textDecoration: 'none',  color:'#000'  }}>
+        <ListItem button>
+          <ListItemIcon>
+            <DashboardIcon />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" />
+        </ListItem>
       </Link>
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <Link to="/user/List" style={{ textDecoration: 'none' }}>
-        <ListItemText primary="Funcionários" />
+      <Link to="/user/List" style={{ textDecoration: 'none', color:'#000' }}>
+      <ListItem button>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+          <ListItemText primary="Funcionários" />
+      </ListItem>
       </Link>
-    </ListItem>
   </div>
 );
 

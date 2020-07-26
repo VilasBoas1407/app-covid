@@ -11,12 +11,15 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { mainListItems } from '../listItems';
 
+import Users from '../../../components/Dashboard/TableUsers';
 
 import { useHistory } from 'react-router-dom';
 
@@ -195,6 +198,11 @@ export default function Dashboard() {
         <Container maxWidth="lg" className={classes.container}>
 
           <Box pt={4}>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <Users />
+              </Paper>
+            </Grid>
             <Copyright />
           </Box>
         </Container>
