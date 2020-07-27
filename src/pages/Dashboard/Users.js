@@ -28,7 +28,7 @@ export default function Users() {
     return number
   }
   
-  const[totalPeople, setPeople] = useState(1)
+  const[totalPeople, setPeople] = useState(0)
   const[total, setTotal] = useState(0);
   let day = new Date().toLocaleDateString().substr(0, 10).split('-').reverse().join('/')
   let date = new Date()
@@ -67,10 +67,9 @@ export default function Users() {
     
     api.request({
       method: 'GET',
-      url: `/users`,
+      url: `/whoAnswer`,
       params:{
         'id_emp': usuario.id_emp,
-        'ds_last_followup': date
       },
       headers:{
         'x-access-token': token,
@@ -80,6 +79,7 @@ export default function Users() {
       setPeople(await getNPeople(response.data.userData))
     }).catch(function(err){});
   }
+  
   const classes = useStyles();
   useEffect(()=>{
     getData()
