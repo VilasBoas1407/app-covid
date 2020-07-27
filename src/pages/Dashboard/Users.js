@@ -18,14 +18,17 @@ export default function Users() {
     let number = 0
     if(array !== undefined){
       array.forEach(element => {
+        
         let symptom = element.id_sintoma.split(',')
         if(symptom !==''){
           number++
         }
       });
     }
-    await setTotal(number)
+    return number
   }
+  
+  const[totalPeople, setPeople] = useState(1)
   const[total, setTotal] = useState(0);
   let day = new Date().toLocaleDateString().substr(0, 10).split('-').reverse().join('/')
   let date = new Date()
@@ -51,12 +54,36 @@ export default function Users() {
       },
       
     }).then(async function(response){
-      await getNPeople(response.data.userData)
+      setTotal(await getNPeople(response.data.userData))
+    }).catch(function(err){});
+  }
+  
+  async function getEmployes(){
+    const token = await localStorage.getItem("token");
+    let usuario = await localStorage.getItem("userData")
+    if(usuario){
+      usuario = JSON.parse(usuario)
+    }
+    
+    api.request({
+      method: 'GET',
+      url: `/users`,
+      params:{
+        'id_emp': usuario.id_emp,
+        'ds_last_followup': date
+      },
+      headers:{
+        'x-access-token': token,
+      },
+      
+    }).then(async function(response){
+      setPeople(await getNPeople(response.data.userData))
     }).catch(function(err){});
   }
   const classes = useStyles();
   useEffect(()=>{
     getData()
+    getEmployes()
   },[])
   return (
     <React.Fragment>
@@ -67,12 +94,12 @@ export default function Users() {
       <Typography color="textSecondary" className={classes.depositContext}>
         {day}
       </Typography>
-     <Title>Funcionários que não responderam no dia:</Title>
+     <Title>Funcionários que ainda não responderam:</Title>
      <Typography color="textSecondary" className={classes.depositContext}>
         {day}
       </Typography>
       <Typography component="p" variant="h4">
-       {total}
+       {totalPeople}
       </Typography>
 
     </React.Fragment>
