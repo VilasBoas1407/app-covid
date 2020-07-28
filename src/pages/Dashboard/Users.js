@@ -17,15 +17,15 @@ export default function Users() {
   async function getNPeople(array){
     let number = 0
     if(array !== undefined){
-      array.forEach(element => {
+      await array.forEach(element => {
         
-        let symptom = element.id_sintoma.split(',')
-        if(symptom !==''){
+        let symptom = element.id_sintoma.split('')
+        if(symptom[0] !==''){
           number++
         }
-      });
+      })
     }
-    return number
+    setTotal(number)
   }
   
   const[totalPeople, setPeople] = useState(0)
@@ -54,7 +54,7 @@ export default function Users() {
       },
       
     }).then(async function(response){
-      setTotal(await getNPeople(response.data.userData))
+      await getNPeople(response.data.userData)
     }).catch(function(err){});
   }
   
@@ -76,7 +76,7 @@ export default function Users() {
       },
       
     }).then(async function(response){
-      setPeople(await getNPeople(response.data.userData))
+      await setPeople(response.data.userData.length)
     }).catch(function(err){});
   }
   
