@@ -29,7 +29,7 @@ export default function Answer() {
     
     api.request({
       method: 'GET',
-        url: `/followup`,
+        url: `/users`,
         params:{
           'id_emp': usuario.id_emp
         },
@@ -38,7 +38,7 @@ export default function Answer() {
         },
         
       }).then(async function(response){
-        
+      
         await createData(response.data.userData)
       }).catch(function(err){        
       });
@@ -52,12 +52,6 @@ export default function Answer() {
         nRows = array.length
       }
       for(let i=0; i<nRows; i++) {
-        if(array[i].ds_usa_epi){
-          array[i].ds_usa_epi = 'Sim' 
-        }else{
-          array[i].ds_usa_epi = 'Não' 
-        }
-          array[i].dt_consulta = array[i].dt_consulta.substr(0, 10).split('-').reverse().join('/')
         data.push(Object.values(array[i]));
       };
       setRows(data)

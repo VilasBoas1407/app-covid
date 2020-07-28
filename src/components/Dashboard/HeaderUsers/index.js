@@ -40,9 +40,9 @@ export default function THeaderUser(props){
         <TableBody>
           {rows.map((row) => (
               <TableRow key={row[0]}>
-              <TableCell>{row[1]}</TableCell>
               <TableCell>{row[2]}</TableCell>
-              <TableCell>{row[3]}</TableCell>
+              <TableCell>{row[6]}</TableCell>
+              <TableCell>{row[4]}</TableCell>
               <TableCell>
                 <Button color="primary" onClick={openModal}>Visualizar</Button>
               </TableCell>
