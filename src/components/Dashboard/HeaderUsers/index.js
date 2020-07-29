@@ -11,12 +11,36 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
+import PopUp from './DialogPopUp/index'
+import api from '../../../services/api'
 
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 
 export default function THeaderUser(props){
-    const { rows } = props
+  const { rows } = props
+
+  async function getPopData(){
+    
+    
+    const token = await localStorage.getItem("token");
+    
+    api.request({
+      method: 'GET',
+        url: `/followup`,
+        params:{
+          'tb_acompanhamento.id_usuario': 10100
+        },
+        headers:{
+          'x-access-token': token,
+        },
+        
+      }).then(async function(response){
+        return response.data.userData
+      }).catch(function(err){        
+      });
+  
+     }
+    
 
     const[open,setOpen] = useState(false);
 
@@ -63,7 +87,7 @@ export default function THeaderUser(props){
         <DialogTitle id="alert-dialog-title">{"Nome: Fulano Da Silva "}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Senectus et netus et malesuada fames ac turpis egestas. Dolor morbi non arcu risus quis varius quam quisque. Turpis tincidunt id aliquet risus feugiat in ante. Luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor purus. Tortor at auctor urna nunc id cursus metus aliquam. Arcu vitae elementum curabitur vitae nunc sed velit. Molestie nunc non blandit massa enim nec dui nunc mattis. Quam nulla porttitor massa id neque aliquam vestibulum morbi blandit. A arcu cursus vitae congue mauris rhoncus aenean. Facilisis gravida neque convallis a cras. Rhoncus dolor purus non enim praesent elementum.
+              <PopUp rows = { rows}/>
             </DialogContentText>
           </DialogContent>  
           <DialogActions>
