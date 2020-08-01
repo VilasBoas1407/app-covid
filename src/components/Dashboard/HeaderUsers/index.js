@@ -13,14 +13,19 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import PopUp from './DialogPopUp/index'
 import api from '../../../services/api'
-
+import ReactDOM from 'react-dom';
+import { PDFViewer } from '@react-pdf/renderer';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 
+import MyDocument from '../../PDF';
+
 export default function THeaderUser(props){
+
+
+
   const { rows } = props
 
   async function getPopData(){
-    
     
     const token = await localStorage.getItem("token");
     
@@ -39,17 +44,27 @@ export default function THeaderUser(props){
       }).catch(function(err){        
       });
   
-     }
+  }
+  
+  const[open,setOpen] = useState(false);
+
+  function openModal(){
+    setOpen(true);
+  }
     
+  function handleClose(){
+    setOpen(false);
+  }
 
-    const[open,setOpen] = useState(false);
+  function RenderPDF(){
+    const App = () => (
+      <PDFViewer>
+          <MyDocument />
+      </PDFViewer>
+    );
 
-    function openModal(){
-      setOpen(true);
-    }
-    function handleClose(){
-      setOpen(false);
-    }
+  }
+
     return(
         <Table size="small">
         <TableHead>
@@ -72,7 +87,7 @@ export default function THeaderUser(props){
               </TableCell>
               <TableCell>
                 <IconButton color="primary" aria-label="Exportar dados para PDF">
-                  <PictureAsPdfIcon/>
+                  <PictureAsPdfIcon onClick={RenderPDF}/>
                 </IconButton>
               </TableCell>
             </TableRow>
