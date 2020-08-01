@@ -22,10 +22,13 @@ import MyDocument from '../../PDF';
 export default function THeaderUser(props){
 
 
+  const[open,setOpen] = useState(false);
+  const [userPopUp , setUser] = useState()
+  const [userName , setName] = useState('Nome:')
 
   const { rows } = props
 
-  async function getPopData(){
+  async function getPopData(id){
     
     const token = await localStorage.getItem("token");
     
@@ -33,21 +36,20 @@ export default function THeaderUser(props){
       method: 'GET',
         url: `/followup`,
         params:{
-          'tb_acompanhamento.id_usuario': 10100
+          'tb_acompanhamento.id_usuario': id
         },
         headers:{
           'x-access-token': token,
         },
         
       }).then(async function(response){
-        return response.data.userData
+        setUser(response.data.userData)
+
       }).catch(function(err){        
       });
   
   }
   
-  const[open,setOpen] = useState(false);
-
   function openModal(){
     setOpen(true);
   }
@@ -56,15 +58,7 @@ export default function THeaderUser(props){
     setOpen(false);
   }
 
-  function RenderPDF(){
-    const App = () => (
-      <PDFViewer>
-          <MyDocument />
-      </PDFViewer>
-    );
-
-  }
-
+    
     return(
         <Table size="small">
         <TableHead>
@@ -83,11 +77,11 @@ export default function THeaderUser(props){
               <TableCell>{row[6]}</TableCell>
               <TableCell>{row[4]}</TableCell>
               <TableCell>
-                <Button color="primary" onClick={openModal}>Visualizar</Button>
+                <Button color="primary" onClick={() =>{ getPopData(row[0], setName('Nome: '+row[2]), openModal())}}>Visualizar</Button>
               </TableCell>
               <TableCell>
                 <IconButton color="primary" aria-label="Exportar dados para PDF">
-                  <PictureAsPdfIcon onClick={RenderPDF}/>
+                  <PictureAsPdfIcon />
                 </IconButton>
               </TableCell>
             </TableRow>
@@ -99,10 +93,10 @@ export default function THeaderUser(props){
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-        <DialogTitle id="alert-dialog-title">{"Nome: Fulano Da Silva "}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{userName}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              <PopUp rows = { rows}/>
+              <PopUp rows = { userPopUp}/>
             </DialogContentText>
           </DialogContent>  
           <DialogActions>
