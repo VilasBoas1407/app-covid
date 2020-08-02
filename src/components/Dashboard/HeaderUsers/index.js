@@ -11,11 +11,13 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import PopUp from './DialogPopUp/index'
-import api from '../../../services/api'
+import PopUp from '../../DialogPopUp/index'
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
+import Divider from '@material-ui/core/Divider';
 
 import './styles.css';
+
+import api from '../../../services/api'
 
 export default function THeaderUser(props){
 
@@ -27,6 +29,8 @@ export default function THeaderUser(props){
   const [userData,setUserData] = useState({
     nome_empresa : ''
   });
+  const data =  new Date().toLocaleDateString();
+  console.log(data)
 
 
   const { rows } = props
@@ -61,17 +65,24 @@ export default function THeaderUser(props){
   }
 
   async function handlePDFOpen(user){
-
+    
     const EmpData = await JSON.parse(localStorage.getItem("userData"));
     console.log(user);
     let userData = {};
     
     userData.nome = user[2];
-    userData.telefone = user[3];
+    userData.cpf = user[3];
     userData.email = user[4];
+    userData.data_cadastro = new Date(user[5]).toLocaleString();
+    userData.telefone = user[6];
+    
     userData.nome_empresa = EmpData.ds_nome;
-    console.log(userData);
-    await setUserData(userData);
+    userData.telefone_empresa = EmpData.ds_telefone;
+    userData.ds_cnpj = EmpData.ds_cnpj;
+    userData.email_empresa = EmpData.ds_email;
+    userData.data_cadastro_empresa = new Date(EmpData.dt_cadastro).toLocaleString();
+    
+    setUserData(userData);
 
     setOpenRelatorio(true);
 
@@ -81,6 +92,7 @@ export default function THeaderUser(props){
       var content = document.getElementById("relatorio");
       window.print(content);
   }
+
   function handlePDFClose(){
       setOpenRelatorio(false);
   }
@@ -140,15 +152,40 @@ export default function THeaderUser(props){
             aria-describedby="alert-dialog-description"
           >
                 <DialogTitle id="alert-dialog-title">
-                  Relatório - {userData.nome_empresa}
+                  <div className="div-data">
+                    Relatório Detalhado Funcionário -  ABRASEL/MG - Associação Brasileira de Bares e Restaurantes seccional Minas Gerais
+                  </div>
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
-                      <label>Nome: {userData.nome}</label><br/><br/>
-                      <label>Telefone : {userData.telefone}</label><br/><br/>
-                      <label>E-mail: {userData.email}</label>
-                      <br/><br/>
-                      <PopUp rows = { userPopUp}/>
+                    <div className="div-data">
+                      <strong>Dados do Funcionário</strong><br/><br/>
+
+                        <b>Nome:</b><label> {userData.nome}</label><br/>
+                        <b>Telefone:</b><label> {userData.telefone}</label><br/>
+                        <b>E-mail:</b> <label> {userData.email}</label><br/>
+                        <b>CPF:</b><label> {userData.cpf}</label> <br/>
+                        <b>Data de Cadastro:</b><label> {userData.data_cadastro}</label> <br/>
+                      <br/>
+                      <Divider />
+                      <br/>
+                      <p><strong>Dados da Empresa</strong></p><br/>
+
+                        <b>Nome:</b><label> {userData.nome_empresa}</label><br/>
+                        <b>Telefone:</b><label> {userData.telefone_empresa}</label><br/>
+                        <b>E-mail:</b> <label> {userData.email_empresa}</label><br/>
+                        <b>CPF:</b><label> {userData.ds_cnpj}</label> <br/>
+                        <b>Data de Cadastro:</b><label> {userData.data_cadastro_empresa}</label> <br/>
+                      <br/>
+                    </div>  
+                    <br/>
+                    <div className="div-data">
+                      <br/>
+                      <strong>Acompanhamento entre os dias : 24/07/2020 - 01/08/2020</strong><br/><br/>
+                        <PopUp rows = { userPopUp}/>
+                        <br/>
+                        <br/>
+                    </div>
                   </DialogContentText>
                 </DialogContent>  
               <div className="no-printme" >

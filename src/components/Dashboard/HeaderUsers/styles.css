@@ -9,3 +9,8 @@
 		display: block;
 	}
 }
+
+.div-data{
+	border: 1px solid black;
+	padding: 4px 4px 4px 4px;
+}
