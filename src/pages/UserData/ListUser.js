@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,6 +10,7 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -17,14 +18,17 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import TextField from '@material-ui/core/TextField';
+
 import { mainListItems } from '../Dashboard/listItems';
-
 import Users from '../../components/Dashboard/TableUsers';
-
 
 import { useHistory } from 'react-router-dom';
 
 import logo from '../../assets/abrasel/logo.png';
+import api from '../../services/api';
+
+import swal from 'sweetalert';
 
 function Copyright() {
   return (
@@ -110,6 +114,10 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
   },
+  filter : {
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(1),
+  },
   paper: {
     padding: theme.spacing(2),
     display: 'flex',
@@ -124,6 +132,10 @@ const useStyles = makeStyles((theme) => ({
 export default function Dashboard() {
 
   const history = useHistory();
+
+  const [initialDate,setInitialDate] = useState();
+  const [finalDate,setFinalDate] = useState();
+  const [filterData,setFilterData] =useState(null);
 
   function validateUser(){
     const login = localStorage.getItem('loginUser');
@@ -141,11 +153,44 @@ export default function Dashboard() {
     setOpen(false);
   };
 
+  async function FindData(){
 
+    const token = await localStorage.getItem("token");
+          api.request({
+              method: 'GET',
+                url: `/followupDate`,
+                params:{
+                  'data_inicio' : initialDate,
+                  'data_final': finalDate
+                },
+                headers:{
+                  'x-access-token': token,
+                },
+
+              })
+              .then(async function(response){
+                setFilterData(response.data.userData);
+              })
+              .catch(function(err){        
+              });
+}
+
+  function handleChangeData(event){
+    const {value, name } = event.target;
+
+    if(name === 'initialDate')
+      setInitialDate(value);
+    else
+      setFinalDate(value);
+    
+    console.log(event.target.name)
+    console.log(event.target.value)
+  }
   function handleLogOut(){
     localStorage.clear();
     history.push('/');
   }
+
   useEffect(()=>{
     validateUser(); 
   },[]);
@@ -196,12 +241,57 @@ export default function Dashboard() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
+        <Container maxWidth="lg" className={classes.filter}>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <Typography component="h2" variant="h6" color="primary" gutterBottom>
+                    Filtro
+                </Typography> 
+                <Grid container spacing={2}>
+                <Grid item xs={3}>
+                  <TextField
+                      id="initialDate"
+                      name="initialDate"
+                      label="Data Inicío"
+                      type="date"
+                      defaultValue="2020-01-01"
+                      onChange={handleChangeData}
+                      value={initialDate}
+                      className={classes.textField}
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                  />
+                </Grid>
+                <Grid item xs={3}>
+                  <TextField
+                        id="finalDate"
+                        name="finalDate"
+                        label="Data Fim"
+                        type="date"
+                        defaultValue={"2020-01-01"}
+                        onChange={handleChangeData}
+                        className={classes.textField}
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={3}>
+                  <Button color="primary" autoFocus onClick={FindData}>
+                    Pesquisar
+                  </Button>
+                </Grid>
+               </Grid>
+              </Paper>
+            </Grid>
+        </Container>
         <Container maxWidth="lg" className={classes.container}>
 
           <Box pt={4}>
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Users />
+                <Users filterData={filterData} />
               </Paper>
             </Grid>
             <Copyright />

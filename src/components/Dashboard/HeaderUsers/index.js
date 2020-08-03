@@ -33,26 +33,43 @@ export default function THeaderUser(props){
   console.log(data)
 
 
-  const { rows } = props
+  const { rows, filterData } = props
 
   async function getPopData(id){
     
     const token = await localStorage.getItem("token");
-    api.request({
-      method: 'GET',
-        url: `/followup`,
-        params:{
-          'tb_acompanhamento.id_usuario': id
-        },
-        headers:{
-          'x-access-token': token,
-        },
-        
-      }).then(async function(response){
-        setUser(response.data.userData)
+    
+    console.log("FilterData",filterData);
 
-      }).catch(function(err){        
+    if(filterData != null){
+
+
+      const data = await filterData.filter((u) => {
+        return u.id_usuario = id
       });
+
+      console.log(data)
+      setUser(data);
+    }
+    else{
+
+      api.request({
+        method: 'GET',
+          url: `/followup`,
+          params:{
+            'tb_acompanhamento.id_usuario': id
+          },
+          headers:{
+            'x-access-token': token,
+          },
+          
+        }).then(async function(response){
+          setUser(response.data.userData)
+  
+        }).catch(function(err){        
+        });
+    }
+
   
   }
   
@@ -181,7 +198,7 @@ export default function THeaderUser(props){
                     <br/>
                     <div className="div-data">
                       <br/>
-                      <strong>Acompanhamento entre os dias : 24/07/2020 - 01/08/2020</strong><br/><br/>
+                      
                         <PopUp rows = { userPopUp}/>
                         <br/>
                         <br/>

@@ -15,7 +15,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 let nRows= 0
-export default function Answer() {
+export default function Answer(props) {
+
+  const { filterData } = props;
+
   function preventDefault(event) {
     event.preventDefault();
     getData()
@@ -66,7 +69,7 @@ export default function Answer() {
       <React.Fragment>
       <Title>Funcionários</Title>
       
-        <TBody rows = {rows}/>
+        <TBody rows = {rows} filterData={filterData}/>
       <div className={classes.seeMore}>
         <Link color="primary" href="#" onClick={preventDefault}>
           Ver mais
