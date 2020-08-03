@@ -17,14 +17,14 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { mainListItems } from '../listItems';
+import { mainListItems } from '../Dashboard/listItems';
 
-import Users from '../../../components/Dashboard/TableUsers';
+import Users from '../../components/Dashboard/TableUsers';
 
 
 import { useHistory } from 'react-router-dom';
 
-import logo from '../../../assets/abrasel/logo.png';
+import logo from '../../assets/abrasel/logo.png';
 
 function Copyright() {
   return (

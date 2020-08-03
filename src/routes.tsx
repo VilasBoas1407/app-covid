@@ -6,7 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Details from './pages/User/Details';
 import Dashboard from './pages/Dashboard/Dashboard';
-import ListUser from './pages/Dashboard/User/ListUser';
+import ListUser from './pages/UserData/ListUser';
 
 const Routes = () => {
     return (
