@@ -28,7 +28,7 @@ export const mainListItems = (
           <ListItemText primary="Funcionários" />
       </ListItem>
       </Link>
-      <Link to="/user/List" style={{ textDecoration: 'none', color:'#000' }}>
+      <Link to="/user/DidntAnswer" style={{ textDecoration: 'none', color:'#000' }}>
       <ListItem button>
         <ListItemIcon>
           <CancelPresentation />

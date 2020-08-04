@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import Details from './pages/User/Details';
 import Dashboard from './pages/Dashboard/Dashboard';
 import ListUser from './pages/UserData/ListUser';
+import DidntAnswer from './pages/DidntAnswer';
 
 const Routes = () => {
     return (
@@ -17,6 +18,7 @@ const Routes = () => {
             <Route component={Details} path="/user/Details"/>
             <Route component={Dashboard} path="/comp/Dashboard"/>
             <Route component={ListUser} path="/user/List"/>
+            <Route component={DidntAnswer} path="/user/DidntAnswer"/>
         </BrowserRouter>
     );
 }

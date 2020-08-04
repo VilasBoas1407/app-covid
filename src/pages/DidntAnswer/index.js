@@ -129,7 +129,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
+export default function DidntAnswer() {
 
   const history = useHistory();
 
@@ -155,13 +155,17 @@ export default function Dashboard() {
 
   async function FindData(){
 
+    let usuario = await localStorage.getItem("userData")
+      
+      if(usuario){
+        usuario = JSON.parse(usuario)
+      }
     const token = await localStorage.getItem("token");
           api.request({
               method: 'GET',
-                url: `/followupDate`,
+                url: `/whoAnswer`,
                 params:{
-                  'data_inicio' : initialDate,
-                  'data_final': finalDate
+                  id_emp: usuario.id_emp
                 },
                 headers:{
                   'x-access-token': token,
@@ -169,6 +173,7 @@ export default function Dashboard() {
 
               })
               .then(async function(response){
+        
                 setFilterData(response.data.userData);
               })
               .catch(function(err){        
@@ -183,6 +188,7 @@ export default function Dashboard() {
     else
       setFinalDate(value);
     
+
   }
   function handleLogOut(){
     localStorage.clear();
@@ -191,6 +197,7 @@ export default function Dashboard() {
 
   useEffect(()=>{
     validateUser(); 
+    FindData();
   },[]);
 
   return (
@@ -209,7 +216,7 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Acompanhamento - Lista de Usuários
+            Acompanhamento - Lista de Usuários que não responderam
           </Typography>
           <IconButton color="inherit">
               <ExitToAppIcon onClick={handleLogOut}/>
@@ -239,51 +246,6 @@ export default function Dashboard() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.filter}>
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Typography component="h2" variant="h6" color="primary" gutterBottom>
-                    Filtro
-                </Typography> 
-                <Grid container spacing={2}>
-                <Grid item xs={3}>
-                  <TextField
-                      id="initialDate"
-                      name="initialDate"
-                      label="Data Inicío"
-                      type="date"
-                      defaultValue="2020-01-01"
-                      onChange={handleChangeData}
-                      value={initialDate}
-                      className={classes.textField}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                  />
-                </Grid>
-                <Grid item xs={3}>
-                  <TextField
-                        id="finalDate"
-                        name="finalDate"
-                        label="Data Fim"
-                        type="date"
-                        defaultValue={"2020-01-01"}
-                        onChange={handleChangeData}
-                        className={classes.textField}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                    />
-                </Grid>
-                <Grid item xs={3}>
-                  <Button color="primary" autoFocus onClick={FindData}>
-                    Pesquisar
-                  </Button>
-                </Grid>
-               </Grid>
-              </Paper>
-            </Grid>
-        </Container>
         <Container maxWidth="lg" className={classes.container}>
 
           <Box pt={4}>

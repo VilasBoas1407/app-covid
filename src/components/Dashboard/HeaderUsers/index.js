@@ -30,7 +30,6 @@ export default function THeaderUser(props){
     nome_empresa : ''
   });
   const data =  new Date().toLocaleDateString();
-  console.log(data)
 
 
   const { rows, filterData } = props
@@ -39,8 +38,6 @@ export default function THeaderUser(props){
     
     const token = await localStorage.getItem("token");
     
-    console.log("FilterData",filterData);
-
     if(filterData != null){
 
 
@@ -48,7 +45,6 @@ export default function THeaderUser(props){
         return u.id_usuario = id
       });
 
-      console.log(data)
       setUser(data);
     }
     else{
@@ -84,7 +80,7 @@ export default function THeaderUser(props){
   async function handlePDFOpen(user){
     
     const EmpData = await JSON.parse(localStorage.getItem("userData"));
-    console.log(user);
+  
     let userData = {};
     
     userData.nome = user[2];
