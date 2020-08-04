@@ -15,13 +15,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 let nRows= 0
-export default function Orders() {
+export default function Answer() {
   function preventDefault(event) {
     event.preventDefault();
     getData()
   }
     async function getData(){
-    const tokem = await localStorage.getItem("token");
+    const token = await localStorage.getItem("token");
     let usuario = await localStorage.getItem("userData")
     if(usuario){
       usuario = JSON.parse(usuario)
@@ -34,7 +34,7 @@ export default function Orders() {
           'id_emp': usuario.id_emp
         },
         headers:{
-          'x-access-token': tokem,
+          'x-access-token': token,
         },
         
       }).then(async function(response){
@@ -70,7 +70,7 @@ export default function Orders() {
     },[]);
     return (
       <React.Fragment>
-      <Title>Funcionarios</Title>
+      <Title>Funcionários</Title>
       
         <TBody rows = {rows}/>
       <div className={classes.seeMore}>

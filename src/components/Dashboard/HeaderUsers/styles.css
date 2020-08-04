@@ -1,0 +1,16 @@
+.printme {
+	display: none;
+}
+@media print {
+	.no-printme  {
+		display: none;
+	}
+	.printme  {
+		display: block;
+	}
+}
+
+.div-data{
+	border: 1px solid black;
+	padding: 4px 4px 4px 4px;
+}

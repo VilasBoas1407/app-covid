@@ -1,5 +1,3 @@
-//Parei em 01:00:00
-
 import React from 'react';
 import { FiLogIn,FiPlusSquare } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
@@ -15,8 +13,7 @@ const Home = () => {
                 <Header />
                 <main>
                     <h1>Ajude sua empresa a combater o COVID-19.</h1>
-                    <p>Responda o questionário diariamente sobre como está se sentindo.</p>
-
+                    <p>Responda este questionário diariamente sobre como está se sentindo.</p>
                     <div className="row">
                         <Link to="/login">
                             <span>

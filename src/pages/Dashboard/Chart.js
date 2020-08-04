@@ -16,10 +16,10 @@ export default function Chart() {
   async function getNPeople(date,array){
     let number = 0
     date = date.split('-').reverse().join('-')
-    if(array != undefined){
+    if(array !== undefined){
       array.forEach(element => {
         let symptom = element.id_sintoma.split(',')
-        if(symptom !=''){
+        if(symptom !==''){
           number++
         }
       });
