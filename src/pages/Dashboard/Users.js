@@ -53,7 +53,6 @@ export default function Users() {
       },
       
     }).then(async function(response){
-      console.log(response.data.userData)
       await getNPeople(response.data.userData)
     }).catch(function(err){});
   }

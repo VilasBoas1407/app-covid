@@ -7,30 +7,30 @@ import Table from '@material-ui/core/Table';
 
 export default function TBody(props){
     const { rows } = props
-    if(rows !== null){
+    if(rows){
 
         rows.map(row =>{
-        })
-        return(
-            <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Data Ultima Resposta</TableCell>
-            <TableCell>Nome</TableCell>
-            <TableCell>Telefone</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-              <TableRow key={row.id_usuario}>
-              <TableCell>{row.data_last_followup}</TableCell>
-              <TableCell>{row.ds_nome}</TableCell>
-              <TableCell>{row.ds_telefone}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-        </Table>
-    );
+            return(
+                <Table size="small">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Data Ultima Resposta</TableCell>
+                            <TableCell>Nome</TableCell>
+                            <TableCell>Telefone</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {rows.map((row) => (
+                            <TableRow key={row.id_usuario}>
+                            <TableCell>{row.data_last_followup}</TableCell>
+                            <TableCell>{row.ds_nome}</TableCell>
+                            <TableCell>{row.ds_telefone}</TableCell>
+                            </TableRow>
+                    ))}
+                    </TableBody>
+                </Table>
+            )
+        });
     }else{
         return(
         <h3>Todos os Funcionarios Responderam</h3>

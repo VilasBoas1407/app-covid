@@ -169,10 +169,8 @@ export default function DidntAnswer() {
                 headers:{
                   'x-access-token': token,
                 },
-
               })
               .then(async function(response){
-                console.log(response.data.userData)
                 setFilterData(response.data.userData);
               })
               .catch(function(err){        
