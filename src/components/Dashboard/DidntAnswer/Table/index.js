@@ -20,7 +20,7 @@ export default function TBody(props){
                 <TableBody>
                     {rows.map((row) => (
                         <TableRow key={row.id_usuario}>
-                        <TableCell>{row.ds_last_followup}</TableCell>
+                        <TableCell>{row.ds_last_followup.split(' ')[0].split('-').reverse().join('-')}</TableCell>
                         <TableCell>{row.ds_nome}</TableCell>
                         <TableCell>{row.ds_telefone}</TableCell>
                         </TableRow>
