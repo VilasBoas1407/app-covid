@@ -134,7 +134,7 @@ export default function DidntAnswer() {
 
   const history = useHistory();
 
-  const [filterData,setFilterData] =useState(null);
+  const [filterData,setFilterData] =useState();
 
   function validateUser(){
     const login = localStorage.getItem('loginUser');
@@ -171,9 +171,10 @@ export default function DidntAnswer() {
                 },
               })
               .then(async function(response){
-                setFilterData(response.data.userData);
+                await setFilterData(response.data.userData);
               })
-              .catch(function(err){        
+              .catch(function(err){ 
+                console.log(err)       
               });
 }
 
@@ -183,8 +184,8 @@ export default function DidntAnswer() {
   }
 
   useEffect(()=>{
-    validateUser(); 
     FindData();
+    validateUser(); 
   },[]);
 
   return (

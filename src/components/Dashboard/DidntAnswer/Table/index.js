@@ -7,33 +7,36 @@ import Table from '@material-ui/core/Table';
 
 export default function TBody(props){
     const { rows } = props
-    if(rows){
-
-        rows.map(row =>{
-            return(
-                <Table size="small">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Data Ultima Resposta</TableCell>
-                            <TableCell>Nome</TableCell>
-                            <TableCell>Telefone</TableCell>
+    if(rows){   
+        return(
+            <Table size="medium">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Data Ultima Resposta</TableCell>
+                        <TableCell>Nome</TableCell>
+                        <TableCell>Telefone</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {rows.map((row) => (
+                        <TableRow key={row.id_usuario}>
+                        <TableCell>{row.ds_last_followup}</TableCell>
+                        <TableCell>{row.ds_nome}</TableCell>
+                        <TableCell>{row.ds_telefone}</TableCell>
                         </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.map((row) => (
-                            <TableRow key={row.id_usuario}>
-                            <TableCell>{row.data_last_followup}</TableCell>
-                            <TableCell>{row.ds_nome}</TableCell>
-                            <TableCell>{row.ds_telefone}</TableCell>
-                            </TableRow>
-                    ))}
-                    </TableBody>
-                </Table>
-            )
-        });
+                ))}
+                </TableBody>
+            </Table>
+        );
     }else{
         return(
-        <h3>Todos os Funcionarios Responderam</h3>
+            <Table size="small">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Todos os Funcionarios Responderam</TableCell>
+                    </TableRow>
+                </TableHead>
+            </Table>
         )
     }
 }
