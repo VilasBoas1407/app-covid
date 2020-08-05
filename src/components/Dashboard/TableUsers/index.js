@@ -41,7 +41,6 @@ export default function Answer(props) {
         },
         
       }).then(async function(response){
-      
         await createData(response.data.userData)
       }).catch(function(err){        
       });

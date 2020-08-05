@@ -17,10 +17,9 @@ export default function Users() {
   async function getNPeople(array){
     let number = 0
     if(array !== undefined){
-      await array.forEach(element => {
-        
+      await array.forEach(element => {        
         let symptom = element.id_sintoma.split('')
-        if(symptom[0] !==''){
+        if(symptom.length()>0){
           number++
         }
       })
@@ -54,6 +53,7 @@ export default function Users() {
       },
       
     }).then(async function(response){
+      console.log(response.data.userData)
       await getNPeople(response.data.userData)
     }).catch(function(err){});
   }

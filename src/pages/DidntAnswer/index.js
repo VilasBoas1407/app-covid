@@ -22,6 +22,7 @@ import TextField from '@material-ui/core/TextField';
 
 import { mainListItems } from '../Dashboard/listItems';
 import Users from '../../components/Dashboard/TableUsers';
+import TBody from '../../components/Dashboard/DidntAnswer/Table'
 
 import { useHistory } from 'react-router-dom';
 
@@ -133,8 +134,6 @@ export default function DidntAnswer() {
 
   const history = useHistory();
 
-  const [initialDate,setInitialDate] = useState();
-  const [finalDate,setFinalDate] = useState();
   const [filterData,setFilterData] =useState(null);
 
   function validateUser(){
@@ -173,23 +172,13 @@ export default function DidntAnswer() {
 
               })
               .then(async function(response){
-        
+                console.log(response.data.userData)
                 setFilterData(response.data.userData);
               })
               .catch(function(err){        
               });
 }
 
-  function handleChangeData(event){
-    const {value, name } = event.target;
-
-    if(name === 'initialDate')
-      setInitialDate(value);
-    else
-      setFinalDate(value);
-    
-
-  }
   function handleLogOut(){
     localStorage.clear();
     history.push('/');
@@ -251,7 +240,7 @@ export default function DidntAnswer() {
           <Box pt={4}>
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Users filterData={filterData} />
+                <TBody rows={filterData} />
               </Paper>
             </Grid>
             <Copyright />
