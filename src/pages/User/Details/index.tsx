@@ -140,7 +140,7 @@ const Details = () => {
         }).catch(function(err){
             swal({
                 title: "Erro!",
-                text: "Ocorreu um erro interno, favor contatar a administração : " + err,
+                text: "Ocorreu um erro interno, favor contactar a administração : " + err,
                 icon: "error"
               });
         })
@@ -186,7 +186,7 @@ const Details = () => {
             }).catch(function(err){
                 swal({
                     title: "Erro!",
-                    text: "Ocorreu um erro interno, favor contatar a administração : " + err,
+                    text: "Ocorreu um erro interno, favor contactar a administração : " + err,
                     icon: "error"
                 });
             });
