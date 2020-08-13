@@ -19,7 +19,7 @@ export default function Chart() {
     if(array !== undefined){
       array.forEach(element => {
         let symptom = element.id_sintoma.split(',')
-        if(symptom.length() >0){
+        if(symptom.length >0){
           number++
         }
       });

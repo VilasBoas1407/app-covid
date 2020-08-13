@@ -68,7 +68,7 @@ const Details = () => {
         data.ds_possui_epi = formValue.ds_possui_epi ? 1 : 0;
         data.id_usuario = userData.id_usuario;
       
-
+        console.log(token)
         api.request({
             method : 'POST',
             url : '/followup',
@@ -79,6 +79,7 @@ const Details = () => {
                 followUp: data
             },
         }).then(function(response){
+            console.log(response)
             if(response.data.valid){
                 swal({
                     title: "Obrigado!",
